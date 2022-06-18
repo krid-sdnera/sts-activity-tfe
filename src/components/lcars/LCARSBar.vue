@@ -15,27 +15,27 @@ export default {
   props: {
     colorScheme: {
       default: 1,
-      type: Number
+      type: Number,
     },
     align: {
-      default: 'left',
+      default: "left",
       type: String,
       validator: function (value) {
-        return ['left', 'right'].includes(value)
-      }
-    }
+        return ["left", "right"].includes(value);
+      },
+    },
   },
   computed: {
     // Creates a prop to conditionally render slot content
     hasTextContent() {
-      if (this.$slots.default && !!this.$slots.default()[0].children.length) {
-        return true
-      }
+      // if (this.$slots.default && !!this.$slots.default()[0].children.length) {
+      //   return true
+      // }
 
-      return false
+      return true;
     },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -77,7 +77,7 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   /* truncating a string with custom string is not supported in any browser except Firefox */
-  text-overflow: '';
+  text-overflow: "";
   /* alignment tweak; need to check other systems but works good on Mac */
   vertical-align: text-bottom;
 
@@ -108,7 +108,6 @@ export default {
   margin-left: var(--lcars-block-gap);
 }
 
-
 .bar[data-color-scheme="1"] .bar-left,
 .bar[data-color-scheme="1"] .bar-right {
   background-color: var(--lcars-color-a3);
@@ -118,6 +117,4 @@ export default {
 .bar[data-color-scheme="2"] .bar-right {
   background-color: var(--lcars-color-a7);
 }
-
-
 </style>

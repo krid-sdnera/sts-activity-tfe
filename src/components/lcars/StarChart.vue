@@ -21,10 +21,9 @@
           class="labeled-star"
           :style="{
             width: item.size + 'px',
-            height: item.size + 'px'
+            height: item.size + 'px',
           }"
-        >
-        </div>
+        ></div>
       </div>
       <div
         v-for="(item, index) in backgroundStars"
@@ -34,10 +33,9 @@
           left: `calc(${item.left}% - ${item.size}px / 2)`,
           top: `calc(${item.top}% - ${item.size}px / 2)`,
           width: item.size + 'px',
-          height: item.size + 'px'
+          height: item.size + 'px',
         }"
-      >
-      </div>
+      ></div>
     </div>
     <div class="grid-container">
       <div v-for="(item, index) in numbers" :key="index" class="grid-item">
@@ -77,201 +75,205 @@ import {
   pickRandomWithoutReplacement,
   getRandomRange,
   getRandomInt,
-  throttle
-} from './utils'
-import ForwardScanner from './ForwardScanner.vue'
-import InspectBracket from './InspectBracket.vue'
-import StarCoords from './StarCoords.vue'
-import stars from './star-systems.json'
+  throttle,
+} from "~/common/utils";
+import * as noise from "~/common/utils/perlin";
+import ForwardScanner from "./ForwardScanner.vue";
+import InspectBracket from "./InspectBracket.vue";
+import StarCoords from "./StarCoords.vue";
+import stars from "./star-systems.json";
 
-const COLLISION_BUFFER = 10
+const COLLISION_BUFFER = 10;
 
-function drawGalacticNoise (canvas) {
+function drawGalacticNoise(canvas) {
   // Perlin noise implementation and canvas rendering based on
   // https://github.com/josephg/noisejs
   /* global noise */
-  const rect = canvas.getBoundingClientRect()
+  const rect = canvas.getBoundingClientRect();
 
-  canvas.width = rect.width
-  canvas.height = rect.height
+  canvas.width = rect.width;
+  canvas.height = rect.height;
 
-  const ctx = canvas.getContext('2d')
-  const image = ctx.createImageData(canvas.width, canvas.height)
-  const data = image.data
+  const ctx = canvas.getContext("2d");
+  const image = ctx.createImageData(canvas.width, canvas.height);
+  const data = image.data;
 
-  noise.seed(Math.floor(Math.random() * 65535) + 1)
+  noise.seed(Math.floor(Math.random() * 65535) + 1);
 
   for (let x = 0; x < canvas.width; x++) {
     for (let y = 0; y < canvas.height; y++) {
       // controls scale of noise
       // base it on canvas.height so that it still looks right on large screens
-      let value = noise.perlin2(x / (canvas.height / 2), y / (canvas.height / 2))
-      value *= 256
+      let value = noise.perlin2(
+        x / (canvas.height / 2),
+        y / (canvas.height / 2)
+      );
+      value *= 256;
 
-      const cell = (x + y * canvas.width) * 4
+      const cell = (x + y * canvas.width) * 4;
       if (value > 75) {
         // data[cell] = data[cell + 1] = data[cell + 2] = value
         // data[cell] += Math.max(0, (25 - value) * 8)
-        data[cell] = 19 // R
-        data[cell + 1] = 11 // G
-        data[cell + 2] = 129 // B
-        data[cell + 3] = 96 // alpha
+        data[cell] = 19; // R
+        data[cell + 1] = 11; // G
+        data[cell + 2] = 129; // B
+        data[cell + 3] = 96; // alpha
       } else if (value > 25) {
         // data[cell] = data[cell + 1] = data[cell + 2] = value
         // data[cell] += Math.max(0, (25 - value) * 8)
-        data[cell] = 19 // R
-        data[cell + 1] = 11 // G
-        data[cell + 2] = 129 // B
-        data[cell + 3] = 72 // alpha
+        data[cell] = 19; // R
+        data[cell + 1] = 11; // G
+        data[cell + 2] = 129; // B
+        data[cell + 3] = 72; // alpha
       } else if (value > -25) {
         // data[cell] = data[cell + 1] = data[cell + 2] = value
         // data[cell] += Math.max(0, (25 - value) * 8)
-        data[cell] = 19 // R
-        data[cell + 1] = 11 // G
-        data[cell + 2] = 129 // B
-        data[cell + 3] = 24 // alpha
+        data[cell] = 19; // R
+        data[cell + 1] = 11; // G
+        data[cell + 2] = 129; // B
+        data[cell + 3] = 24; // alpha
       }
     }
   }
 
-  ctx.putImageData(image, 0, 0)
+  ctx.putImageData(image, 0, 0);
 }
 
-function checkLabelCollision (labelContainer) {
-  const labelEls = labelContainer.querySelectorAll('.label')
-  const metrics = []
+function checkLabelCollision(labelContainer) {
+  const labelEls = labelContainer.querySelectorAll(".label");
+  const metrics = [];
 
   // Batch read all dimensions at once
   for (let i = 0; i < labelEls.length; i++) {
-    const data = labelEls[i].getBoundingClientRect()
-    data.textContent = labelEls[i].textContent
-    metrics.push(data)
+    const data = labelEls[i].getBoundingClientRect();
+    data.textContent = labelEls[i].textContent;
+    metrics.push(data);
   }
 
   // For each label, check collision with all others
   for (let i = 0; i < metrics.length; i++) {
-    const label = metrics[i]
+    const label = metrics[i];
 
     for (let j = 0; j < metrics.length; j++) {
-      const toCheck = metrics[j]
+      const toCheck = metrics[j];
       // Don't check self
-      if (label === toCheck) continue
+      if (label === toCheck) continue;
       // Don't re-check previously checked items
-      if (toCheck.checked === true) continue
+      if (toCheck.checked === true) continue;
       // Don't need to continue checking something that collides
-      if (label.collide === true) continue
+      if (label.collide === true) continue;
 
       // Test for collision and mark it if true
-      label.collide = testCollision(label, toCheck, COLLISION_BUFFER)
+      label.collide = testCollision(label, toCheck, COLLISION_BUFFER);
     }
 
     // Mark a label as checked so it doesn't need to be rechecked
-    label.checked = true
+    label.checked = true;
   }
 
   // Batch hide all collided labels
   for (let i = 0; i < labelEls.length; i++) {
     if (metrics[i].collide === true) {
-      labelEls[i].classList.add('collide')
+      labelEls[i].classList.add("collide");
     } else {
       // Remove a previously applied class if element no longer collides
-      labelEls[i].classList.remove('collide')
+      labelEls[i].classList.remove("collide");
     }
   }
 }
 
-function testCollision (candidate, check, buffer = 0) {
+function testCollision(candidate, check, buffer = 0) {
   if (
     candidate.top > check.bottom + buffer ||
     candidate.right < check.left - buffer ||
     candidate.bottom < check.top - buffer ||
     candidate.left > check.right + buffer
   ) {
-    return false
+    return false;
   }
 
-  return true
+  return true;
 }
 
 export default {
-  name: 'star-chart',
+  name: "star-chart",
   props: {
     type: {
-      default: 'nav',
+      default: "nav",
       type: String,
       validator: function (value) {
-        return ['nav', 'planet'].indexOf(value) !== -1
-      }
-    }
+        return ["nav", "planet"].indexOf(value) !== -1;
+      },
+    },
   },
   data() {
-    const numbers = []
+    const numbers = [];
     for (let i = 0; i < 150; i++) {
-      numbers.push(makeRandomNumber(4, true))
+      numbers.push(makeRandomNumber(4, true));
     }
 
-    const backgroundStars = []
+    const backgroundStars = [];
     for (let i = 0; i < 100; i++) {
       const star = {
         left: Math.random() * 100,
         top: Math.random() * 100,
-        size: getRandomInt(1, 10)
-      }
-      backgroundStars.push(star)
+        size: getRandomInt(1, 10),
+      };
+      backgroundStars.push(star);
     }
-    
-    const labeledStars = []
-    const numberStars = getRandomInt(6, 18)
+
+    const labeledStars = [];
+    const numberStars = getRandomInt(6, 18);
     for (let i = 0; i < numberStars; i++) {
       const star = {
         left: getRandomRange(2, 80),
         top: getRandomRange(10, 90),
         size: getRandomInt(8, 12),
-        label: pickRandomWithoutReplacement(stars)
-      }
-      labeledStars.push(star)
+        label: pickRandomWithoutReplacement(stars),
+      };
+      labeledStars.push(star);
     }
 
     return {
       numbers,
       backgroundStars,
-      labeledStars
-    }
+      labeledStars,
+    };
   },
   methods: {
     draw() {
-      drawGalacticNoise(this.$refs.noise)
-      checkLabelCollision(this.$refs.labels)
-    }
+      drawGalacticNoise(this.$refs.noise);
+      checkLabelCollision(this.$refs.labels);
+    },
   },
   mounted() {
     this.$nextTick(() => {
-      this.draw()
-    })
+      this.draw();
+    });
 
     // Can't put this on `methods` object because no matter how I write it
     // I can't get the throttled function to have access to `this`
     // So I just add it manually on mount, it will still be accessible in other
     // lifecycle methods
     this.throttledCheckLabelCollision = throttle(() => {
-      checkLabelCollision(this.$refs.labels)
-    }, 20)
+      checkLabelCollision(this.$refs.labels);
+    }, 20);
 
     // Throttle the collision check when the window is resized to
     // limit calculations and layout thrashing
     // TODO: watch ResizeObserver on the element, instead of watching
     // window resize
-    window.addEventListener('resize', this.throttledCheckLabelCollision)
+    window.addEventListener("resize", this.throttledCheckLabelCollision);
   },
   beforeUnmount() {
-    window.removeEventListener('resize', this.throttledCheckLabelCollision)
+    window.removeEventListener("resize", this.throttledCheckLabelCollision);
   },
   components: {
     ForwardScanner,
     InspectBracket,
     StarCoords,
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

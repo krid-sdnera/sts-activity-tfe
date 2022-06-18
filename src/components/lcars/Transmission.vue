@@ -21,19 +21,19 @@
 </template>
 
 <script>
-import { makeRandomNumber } from './utils'
-import FederationLogo from './federation-logo.svg'
+import { makeRandomNumber } from "~/common/utils";
+import FederationLogo from "./federation-logo.svg";
 
 export default {
   data() {
     return {
       number: makeRandomNumber(4, false),
-    }
+    };
   },
   components: {
-    FederationLogo
-  }
-}
+    FederationLogo,
+  },
+};
 </script>
 
 <style>
@@ -84,7 +84,7 @@ h3 {
 .transmission-container header::before,
 .transmission-container footer::before {
   position: absolute;
-  content: '';
+  content: "";
   width: 8px;
   height: 40px;
   background-color: #090909;
@@ -93,7 +93,7 @@ h3 {
 .transmission-container header::after,
 .transmission-container footer::after {
   position: absolute;
-  content: '';
+  content: "";
   width: 8px;
   height: 40px;
   background-color: #090909;

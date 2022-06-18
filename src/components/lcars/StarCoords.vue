@@ -17,27 +17,27 @@
 </style>
 
 <script>
-import { makeRandomNumber } from './utils'
+import { makeRandomNumber } from "~/common/utils";
 
-const UPDATE_INTERVAL = 200
+const UPDATE_INTERVAL = 200;
 
 export default {
   data() {
     return {
       coord1: makeRandomNumber(6, true),
-      coord2: makeRandomNumber(6, true)
-    }
+      coord2: makeRandomNumber(6, true),
+    };
   },
   mounted() {
     this.timer = window.setInterval(() => {
-      this.coord1 = makeRandomNumber(6, true)
-      this.coord2 = makeRandomNumber(6, true)
-    }, UPDATE_INTERVAL)
+      this.coord1 = makeRandomNumber(6, true);
+      this.coord2 = makeRandomNumber(6, true);
+    }, UPDATE_INTERVAL);
   },
   beforeUnmount() {
     if (this.timer) {
-      window.clearInterval(this.timer)
+      window.clearInterval(this.timer);
     }
-  }
-}
+  },
+};
 </script>

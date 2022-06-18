@@ -8,7 +8,7 @@
 export default {
   computed: {},
   mounted() {
-    this.$setBreadcrumbs([{ to: null, label: "Home" }]);
+    // this.$setBreadcrumbs([{ to: null, label: "Home" }]);
   },
 };
 </script>
