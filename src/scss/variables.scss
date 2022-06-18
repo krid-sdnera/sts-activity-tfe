@@ -32,6 +32,7 @@ a {
   --lcars-color-a7: #9c698a;
   --lcars-color-a8: #b6a5d1;
   --lcars-color-a9: #8b72aa;
+  --lcars-color-black: #090909;
 
   --lcars-gap: 10px;
   --lcars-sidebar-width: 185px;
@@ -66,7 +67,7 @@ body {
   background-color: var(--lcars-color-black);
   margin: 0;
   padding: 0;
-  font-family: 'lcars', sans-serif;
+  font-family: 'Antonio', sans-serif;
   user-select: none;
 }
 
