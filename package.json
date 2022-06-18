@@ -1,0 +1,26 @@
+{
+  "name": "hoadley-hide-web-app",
+  "version": "1.2.0",
+  "description": "This is a basic companion app to be used in conjunction with the Hoadley Hide Hiking event.",
+  "author": "Hoadley Hide Management Team",
+  "private": true,
+  "scripts": {
+    "dev": "MINIMAL=1 nuxt",
+    "build": "nuxt build",
+    "start": "node .output/server/index.mjs"
+  },
+  "dependencies": {
+    "luxon": "^2.0.2",
+    "vue-browser-detect-plugin": "^0.1.18",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0"
+  },
+  "devDependencies": {
+    "@nuxt/bridge": "npm:@nuxt/bridge-edge",
+    "@nuxt/types": "^2.15.8",
+    "@nuxtjs/pwa": "3.3.5",
+    "@nuxtjs/vuetify": "^1.12.1",
+    "@types/luxon": "^2.3.0",
+    "nuxt-edge": "latest"
+  }
+}
