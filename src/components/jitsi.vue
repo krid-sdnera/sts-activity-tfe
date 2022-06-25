@@ -12,6 +12,10 @@ export default {
   mounted() {
     const el = this.$refs["jitsi-container"];
 
+    if (!window.JitsiMeetExternalAPI) {
+      return;
+    }
+
     const domain = "sts.dirk.arends.com.au";
     const options = {
       roomName: "TestCode",
@@ -33,8 +37,9 @@ export default {
         enableInsecureRoomNameWarning: false,
         toolbarButtons: [],
       },
-      userInfo: { displayName: "Command" },
+      userInfo: { displayName: "Mission Command" },
     };
+
     this.api = new window.JitsiMeetExternalAPI(domain, options);
   },
 };
