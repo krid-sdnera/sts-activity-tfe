@@ -2,7 +2,7 @@ import { defineNuxtConfig } from "@nuxt/bridge";
 
 const baseUrl =
   process.env.ENV === "production"
-    ? "https://sts.dirk.arends.com.au"
+    ? "http://web.sts.dirk.arends.com.au"
     : "http://localhost:3000";
 
 export default defineNuxtConfig({
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
    ** Doc: https://vue-meta.nuxtjs.org/api/#metainfo-properties
    */
   head: {
-    title: "Terra Forma",
+    title: "Terra Firma Explora",
     meta: [],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },

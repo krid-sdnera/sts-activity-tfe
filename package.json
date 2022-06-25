@@ -1,8 +1,8 @@
 {
-  "name": "hoadley-hide-web-app",
-  "version": "1.2.0",
-  "description": "This is a basic companion app to be used in conjunction with the Hoadley Hide Hiking event.",
-  "author": "Hoadley Hide Management Team",
+  "name": "star-trek-survival-activity-terra-firma-explora-web-app",
+  "version": "1.0.0",
+  "description": "This is a basic companion webpage for the Star Trek Survival Activity Terra Firma Explora",
+  "author": "Star Trek Survival Activity Terra Firma Explora",
   "private": true,
   "scripts": {
     "dev": "MINIMAL=1 nuxt",

@@ -1,6 +1,4 @@
-# Hoadley Hide Web App
-
-This is a basic companion app to be used in conjunction with the Hoadley Hide Hiking event.
+# Start Trek Survival - Terra Firma Explora - Webpage
 
 ## Build Setup
 
