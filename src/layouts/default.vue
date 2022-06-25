@@ -48,16 +48,16 @@
       </div>
       <div class="main-content">
         <v-main style="height: 100%">
-          <!-- <v-row tile no-gutters style="height: 100%; display: block">
-            <v-col cols="12">  </v-col>
-            <v-col cols="12">
- -->
-          <!-- <app-status-bar></app-status-bar> -->
           <v-container fill-height>
-            <Nuxt />
+            <v-row style="height: 100%">
+              <v-col cols="8" style="height: 100%">
+                <Nuxt />
+              </v-col>
+              <v-col cols="4">
+                <jitsi></jitsi>
+              </v-col>
+            </v-row>
           </v-container>
-          <!-- </v-col>
-          </v-row> -->
         </v-main>
       </div>
       <footer>
@@ -72,9 +72,9 @@
 </template>
 
 <script lang="ts">
-import { EventStage } from "~/types";
 import { makeRandomNumber, makeRandomLetters } from "~/common/utils";
 import { initSounds } from "~/common/utils/sounds";
+import jitsi from "~/components/jitsi.vue";
 
 /**
  * Makes labels for LCARS UI.
@@ -113,6 +113,7 @@ function makeLCARSLabel() {
 }
 
 export default {
+  components: { jitsi },
   data() {
     const sidebarLabelType = Math.ceil(Math.random() * 5);
 

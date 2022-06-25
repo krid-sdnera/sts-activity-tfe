@@ -24,6 +24,7 @@ export default defineNuxtConfig({
         href: "/materialdesignicons.min.css",
       },
     ],
+    script: [{ src: "https://sts.dirk.arends.com.au/external_api.js" }],
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
