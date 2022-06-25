@@ -77,7 +77,7 @@ import {
   getRandomInt,
   throttle,
 } from "~/common/utils";
-import * as noise from "~/common/utils/perlin";
+import { noise } from "~/common/utils/perlin";
 import ForwardScanner from "./ForwardScanner.vue";
 import InspectBracket from "./InspectBracket.vue";
 import StarCoords from "./StarCoords.vue";

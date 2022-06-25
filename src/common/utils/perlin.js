@@ -14,6 +14,8 @@
  *
  */
 
+const perlinModule = {};
+
 (function (global) {
   var module = (global.noise = {});
 
@@ -372,4 +374,6 @@
       v
     );
   };
-})(module.exports);
+})(perlinModule);
+
+export const noise = perlinModule.noise;
