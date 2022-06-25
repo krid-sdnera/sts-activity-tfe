@@ -1,6 +1,6 @@
 <template>
   <div
-    class="star-chart"
+    class="star-chart SM MD LG"
     data-observe-resizes
     data-breakpoints='{"SM": 760, "MD": 1200, "LG": 1600, "XL": 1900}'
   >
@@ -90,6 +90,11 @@ function drawGalacticNoise(canvas) {
   // https://github.com/josephg/noisejs
   /* global noise */
   const rect = canvas.getBoundingClientRect();
+
+  console.log(rect);
+  if (!rect || !rect.width || !rect.height) {
+    return;
+  }
 
   canvas.width = rect.width;
   canvas.height = rect.height;

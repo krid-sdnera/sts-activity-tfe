@@ -5,10 +5,10 @@
           so that it can be styled -->
       <!-- <img src="./bracket-top-left.svg" width="40"/> -->
       <div class="inspect-bracket-left">
-        <InspectBracketTL :width="size" position="topleft" />
+        <LcarsInspectBracketTL :width="size" position="topleft" />
         <div class="inspect-bracket-left-bar">
           <div class="iblb-a">
-            <div class="iblb-a1" style="height: 40%; top: 25%;" />
+            <div class="iblb-a1" style="height: 40%; top: 25%" />
             <div class="iblb-scale">
               <div>010</div>
               <div>020</div>
@@ -22,21 +22,41 @@
             </div>
           </div>
           <div class="iblb-b">
-            <div class="iblb-b1" style="height: 45%; top: 10%;" />
+            <div class="iblb-b1" style="height: 45%; top: 10%" />
             <div class="iblb-marker" />
           </div>
         </div>
-        <InspectBracketTL :width="size" position="bottomleft" />
+        <LcarsInspectBracketTL :width="size" position="bottomleft" />
       </div>
       <div class="inspect-bracket-content">
         <!-- following images from NASA https://nasa.tumblr.com/post/150044040289/top-10-star-trek-planets-chosen-by-our-scientists -->
-        <img v-if="planet === 1" src="./planets/andoria.jpg" class="img-cover" />
+        <img
+          v-if="planet === 1"
+          src="./planets/andoria.jpg"
+          class="img-cover"
+        />
         <img v-else-if="planet === 2" src="./planets/earth.jpg" />
         <img v-else-if="planet === 3" src="./planets/janus.jpg" />
-        <img v-else-if="planet === 4" src="./planets/risa.jpg" class="img-cover" />
-        <img v-else-if="planet === 5" src="./planets/shoreleave.jpg" class="img-cover" />
-        <img v-else-if="planet === 6" src="./planets/vendikar.jpg" class="img-cover" />
-        <img v-else-if="planet === 7" src="./planets/vulcan.jpg" class="img-cover" />
+        <img
+          v-else-if="planet === 4"
+          src="./planets/risa.jpg"
+          class="img-cover"
+        />
+        <img
+          v-else-if="planet === 5"
+          src="./planets/shoreleave.jpg"
+          class="img-cover"
+        />
+        <img
+          v-else-if="planet === 6"
+          src="./planets/vendikar.jpg"
+          class="img-cover"
+        />
+        <img
+          v-else-if="planet === 7"
+          src="./planets/vulcan.jpg"
+          class="img-cover"
+        />
         <!-- think this is from Memory Alpha? -->
         <img v-else src="./planets/kronos.webp" />
       </div>
@@ -44,8 +64,8 @@
         <InspectBracketTL :width="size" position="topright" />
         <div class="inspect-bracket-right-bar" dir="rtl">
           <div class="iblb-a">
-            <div class="iblb-a1" style="height: 40%; top: 10%;" />
-            <div class="iblb-a2" style="height: 25%; top: 15%;" />
+            <div class="iblb-a1" style="height: 40%; top: 10%" />
+            <div class="iblb-a2" style="height: 25%; top: 15%" />
             <div class="iblb-scale">
               <div>010</div>
               <div>020</div>
@@ -58,8 +78,8 @@
               <div>090</div>
             </div>
           </div>
-          <div class="iblb-b" style="height: 62%;">
-            <div class="iblb-b1" style="height: 35%; top: 45%;" />
+          <div class="iblb-b" style="height: 62%">
+            <div class="iblb-b1" style="height: 35%; top: 45%" />
             <div class="iblb-marker" />
           </div>
         </div>
@@ -70,26 +90,26 @@
 </template>
 
 <script>
-import InspectBracketTL from './InspectBracketTL.vue'
+import InspectBracketTL from "./InspectBracketTL.vue";
 
 export default {
   props: {
     size: {
-      default: '100%',
-      type: String
-    }
+      default: "100%",
+      type: String,
+    },
   },
   data() {
     // Set to number of planet images I have
-    const planet = Math.round(Math.random() * 8)
+    const planet = Math.round(Math.random() * 8);
     return {
-      planet
-    }
+      planet,
+    };
   },
   components: {
-    InspectBracketTL
-  }
-}
+    InspectBracketTL,
+  },
+};
 </script>
 
 <style scoped>
@@ -215,7 +235,8 @@ svg {
   /* flex-direction: row-reverse; */
 }
 
-.iblb-a, .iblb-b,
+.iblb-a,
+.iblb-b,
 .iblb-a > div,
 .iblb-b > div {
   position: relative;
@@ -232,7 +253,8 @@ svg {
 }
 
 @media screen and (min-width: 767px) and (min-height: 767px) {
-  .iblb-a, .iblb-b,
+  .iblb-a,
+  .iblb-b,
   .iblb-a > div,
   .iblb-b > div {
     border-top: 3px solid;
@@ -299,22 +321,48 @@ svg {
 }
 
 @keyframes marker-1 {
-  from { top: 65%; }
-  15%  { top: 10%; }
-  30%  { top: 55%; }
-  45%  { top: 35%; }
-  60%  { top: 85%; }
-  85%  { top: 40%; }
-  to   { top: 65%; }
+  from {
+    top: 65%;
+  }
+  15% {
+    top: 10%;
+  }
+  30% {
+    top: 55%;
+  }
+  45% {
+    top: 35%;
+  }
+  60% {
+    top: 85%;
+  }
+  85% {
+    top: 40%;
+  }
+  to {
+    top: 65%;
+  }
 }
 
 @keyframes marker-2 {
-  from { top: 25%; }
-  20%  { top: 85%; }
-  40%  { top: 35%; }
-  60%  { top: 65%; }
-  80%  { top: 10%; }
-  to   { top: 25%; }
+  from {
+    top: 25%;
+  }
+  20% {
+    top: 85%;
+  }
+  40% {
+    top: 35%;
+  }
+  60% {
+    top: 65%;
+  }
+  80% {
+    top: 10%;
+  }
+  to {
+    top: 25%;
+  }
 }
 
 .iblb-scale {

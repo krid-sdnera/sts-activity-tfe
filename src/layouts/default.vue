@@ -1,6 +1,11 @@
 <template>
   <div class="screen XS SM MD">
     <section class="lcars-type-01">
+      <div class="lcars-title small">
+        <LcarsLCARSBar align="left" :color-scheme="titleType">{{
+          title
+        }}</LcarsLCARSBar>
+      </div>
       <div class="lcars-title large" :data-type="titleType">
         <span class="short-title">{{ title }}</span>
         <span class="long-title">{{ longTitle }}</span>
@@ -12,11 +17,14 @@
         <div class="sidebar-block">{{ numbers[1] }}</div>
       </div>
       <div class="sidebar-bottom">
-        <div class="sidebar-block">{{ numbers[2] }}</div>
-        <div class="sidebar-block bgcolor-2">{{ numbers[3] }}</div>
-        <div class="sidebar-block bgcolor-6">{{ numbers[4] }}</div>
-        <div class="sidebar-block bgcolor-3">
-          <router-link to="/transmission">{{ numbers[5] }}</router-link>
+        <div
+          v-for="(item, index) in items"
+          :key="index"
+          :to="item.to"
+          :class="`bgcolor-${item.colour}`"
+          class="sidebar-block"
+        >
+          <nuxt-link :to="item.to"> {{ item.title }} </nuxt-link>
         </div>
       </div>
       <div class="divider-top"></div>
@@ -39,7 +47,18 @@
         </div>
       </div>
       <div class="main-content">
-        <!-- <LcarsStarChart :type="starChartType" /> -->
+        <v-main style="height: 100%">
+          <!-- <v-row tile no-gutters style="height: 100%; display: block">
+            <v-col cols="12">  </v-col>
+            <v-col cols="12">
+ -->
+          <!-- <app-status-bar></app-status-bar> -->
+          <v-container fill-height>
+            <Nuxt />
+          </v-container>
+          <!-- </v-col>
+          </v-row> -->
+        </v-main>
       </div>
       <footer>
         <LcarsLCARSBar align="right" :color-scheme="titleType">
@@ -47,14 +66,6 @@
         </LcarsLCARSBar>
       </footer>
     </section>
-
-    <v-main>
-      <app-status-bar></app-status-bar>
-
-      <v-container>
-        <Nuxt />
-      </v-container>
-    </v-main>
 
     <alerts></alerts>
   </div>
@@ -107,7 +118,22 @@ export default {
 
     return {
       drawer: false,
-      items: [  { title: "Home", icon: "mdi-home", to: "/" }],
+      items: [
+        { title: "Home", icon: "mdi-home", to: "/", colour: 2 },
+        { title: "Star Map", icon: "mdi-home", to: "/", colour: 7 },
+        {
+          title: "GEN STORY",
+          icon: "mdi-home",
+          to: "/generate-story",
+          colour: 3,
+        },
+        {
+          title: "Wiring",
+          icon: "mdi-home",
+          to: "/minigames/amongus-wiring",
+          colour: 4,
+        },
+      ],
       monsterAcronymIndex: 0,
       title: "Title",
       longTitle: "Long titile",
