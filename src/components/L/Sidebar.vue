@@ -8,7 +8,7 @@
     <div
       v-for="(item, i) in items"
       :key="i"
-      :class="item.colour ? `bgcolor-${item.colour}` : ''"
+      :class="`bgcolor-${Math.floor(Math.random() * 9) + 1}`"
       class="sidebar-block"
     >
       <nuxt-link :to="item.to">{{ item.title }}</nuxt-link>

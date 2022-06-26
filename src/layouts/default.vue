@@ -73,30 +73,26 @@ export default {
     return {
       drawer: false,
       sidebarTopMenu: [
-        { title: "LCARS 09943", icon: "mdi-home", to: "/", colour: 2 },
-        { title: "23452", icon: "mdi-home", to: "/" },
+        { title: "LCARS 09943", to: "/" },
+        { title: "23452", to: "/" },
       ],
       sidebarBottomMenu: [
-        { title: "Home", icon: "mdi-home", to: "/", colour: 2 },
-        { title: "Star Map", icon: "mdi-home", to: "/", colour: 7 },
+        { title: "Home", to: "/" },
+        { title: "Star Map", to: "/" },
         {
           title: "GEN STORY",
-          icon: "mdi-home",
           to: "/generate-story",
-          colour: 3,
         },
         {
           title: "Wiring",
-          icon: "mdi-home",
           to: "/minigames/amongus-wiring",
-          colour: 4,
         },
       ],
       metaMenu: [
-        { title: "98765", icon: "mdi-home", to: "/", colour: 2 },
-        { title: "23452", icon: "mdi-home", to: "/" },
-        { title: "5486", icon: "mdi-home", to: "/" },
-        { title: "457689", icon: "mdi-home", to: "/" },
+        { title: "98765", to: "/" },
+        { title: "23452", to: "/" },
+        { title: "5486", to: "/" },
+        { title: "457689", to: "/" },
       ],
       monsterAcronymIndex: 0,
       title: "Title",
