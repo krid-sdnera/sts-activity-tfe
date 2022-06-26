@@ -1,17 +1,20 @@
 <template>
-  <div style="height: 100%; width: 100%">
-    <client-only>
-      <LcarsStarChart :type="starChartType" />
-    </client-only>
-  </div>
+  <LPage>
+    <v-row>
+      <v-col cols="12">
+        <h2 class="restricted">Access Restricted</h2>
+      </v-col>
+      <v-col cols="12">
+        <v-btn block text tile color="red" x-large to="/login">Authorise</v-btn>
+      </v-col>
+    </v-row>
+  </LPage>
 </template>
 
 <script lang="ts">
 export default {
   data() {
-    return {
-      starChartType: Math.random() > 0.5 ? "nav" : "planet",
-    };
+    return {};
   },
   computed: {},
   mounted() {
@@ -19,3 +22,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.restricted {
+  text-align: center;
+  font-size: 6rem;
+  color: red;
+}
+</style>

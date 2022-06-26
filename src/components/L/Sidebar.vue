@@ -25,8 +25,13 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~vuetify/src/styles/styles.sass";
+
+.sidebar-top,
+.sidebar-bottom {
+  font-size: 1.3rem;
+}
 
 .sidebar-top {
   background-color: var(--lcars-color-a6);

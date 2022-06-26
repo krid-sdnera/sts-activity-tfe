@@ -13,7 +13,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~vuetify/src/styles/styles.sass";
 
 .lcars-title {

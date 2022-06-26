@@ -36,7 +36,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* TODO: REFACTOR EVERYTHING - ported from old LCARS repo */
 h1,
 h2,

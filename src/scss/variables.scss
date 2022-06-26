@@ -55,21 +55,11 @@ a {
   --lcars-block-gap: 5px;
 }
 
-html {
-  box-sizing: border-box;
-  font-size: 14px;
-}
-
-@media screen and (min-width: 708px) {
-  html {
-    font-size: 20px;
-  }
-}
 
 html *,
 html *::before,
 html *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 body {

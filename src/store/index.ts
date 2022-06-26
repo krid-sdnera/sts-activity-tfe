@@ -7,6 +7,9 @@ export const state = () => ({
   // UI
   alerts: [] as AppAlert[],
   breadcrumbs: [] as AppBreadcrumb[],
+  // Lcars
+
+  accessCode: null as string | null,
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -38,8 +41,14 @@ export const mutations: MutationTree<RootState> = {
   setBreadcrumbs: (state, breadcrumbs: AppBreadcrumb[]) => {
     Vue.set(state, "breadcrumbs", breadcrumbs);
   },
+  registerLogin: (state, accessCode: string) => {
+    Vue.set(state, "accessCode", accessCode);
+  },
 };
 
 export const actions: ActionTree<RootState, RootState> = {
   async nuxtServerInit({ dispatch }) {},
+  async registerLogin({ commit }, accessCode: string) {
+    commit("registerLogin", accessCode);
+  },
 };

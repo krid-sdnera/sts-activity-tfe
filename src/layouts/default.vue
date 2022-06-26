@@ -6,18 +6,20 @@
       :sidebarBottomMenu="sidebarBottomMenu"
       :metaMenu="metaMenu"
     >
-      <v-main>
-        <v-container fill-height>
-          <v-row>
-            <v-col cols="8">
-              <Nuxt />
-            </v-col>
-            <v-col cols="4">
-              <jitsi></jitsi>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-main>
+      <v-app>
+        <v-main>
+          <v-container fill-height fluid>
+            <v-row>
+              <v-col cols="8">
+                <Nuxt />
+              </v-col>
+              <v-col cols="4">
+                <jitsi></jitsi>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+      </v-app>
     </LContainer>
 
     <alerts></alerts>
@@ -123,4 +125,13 @@ export default {
 
 <style lang="scss">
 @import "~vuetify/src/styles/styles.sass";
+#app {
+  background-color: var(--lcars-colors-black);
+  height: 100%;
+
+  > .v-application--wrap {
+    min-height: unset;
+    height: 100%;
+  }
+}
 </style>
