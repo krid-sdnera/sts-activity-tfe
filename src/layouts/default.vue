@@ -6,10 +6,10 @@
       :sidebarBottomMenu="sidebarBottomMenu"
       :metaMenu="metaMenu"
     >
-      <v-main style="height: 100%">
+      <v-main>
         <v-container fill-height>
-          <v-row style="height: 100%">
-            <v-col cols="8" style="height: 100%">
+          <v-row>
+            <v-col cols="8">
               <Nuxt />
             </v-col>
             <v-col cols="4">
