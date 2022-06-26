@@ -21,12 +21,12 @@ export default {
     // Type can be passed in as a prop, or one is randomly selected
     type: {
       default: () => {
-        return Math.floor(Math.random() * 3) + 1
+        return Math.floor(Math.random() * 3) + 1;
       },
-      type: Number
-    }
-  }
-}
+      type: Number,
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -34,10 +34,11 @@ export default {
   --blob-radius: 3px;
 
   position: relative;
-  /* Parent element controls visibility */
-  display: none;
+  display: grid;
   grid-area: divider;
-  grid-template-rows: var(--lcars-divider-top-height) var(--lcars-divider-bottom-height);
+  grid-template-rows: var(--lcars-divider-top-height) var(
+      --lcars-divider-bottom-height
+    );
   row-gap: var(--lcars-gap);
   justify-self: end;
 }
@@ -117,7 +118,7 @@ export default {
 }
 
 [data-type="2"] .dg1b-x::before {
-  content: ' ';
+  content: " ";
   position: absolute;
   bottom: calc(var(--lcars-divider-top-height) + 4px);
   left: 0;
@@ -127,7 +128,7 @@ export default {
 }
 
 [data-type="2"] .dg2b-x {
-  content: ' ';
+  content: " ";
   position: absolute;
   top: 0;
   left: 0;
@@ -138,7 +139,7 @@ export default {
 }
 
 [data-type="2"] .dg2b-x::before {
-  content: ' ';
+  content: " ";
   position: absolute;
   top: calc(var(--lcars-divider-bottom-height) + 4px);
   left: 0;
@@ -148,7 +149,7 @@ export default {
 }
 
 [data-type="2"] .dg2b-x::after {
-  content: ' ';
+  content: " ";
   position: absolute;
   /* 4px is spacing between stuff; 8px is height of thick line */
   top: calc(var(--lcars-divider-bottom-height) + 4px + 8px + 4px);
@@ -204,7 +205,7 @@ export default {
 }
 
 [data-type="3"] .dg1b-x::before {
-  content: ' ';
+  content: " ";
   position: absolute;
   bottom: calc(var(--lcars-divider-top-height) + 6px);
   right: 0;
@@ -214,7 +215,7 @@ export default {
 }
 
 [data-type="3"] .dg2b-x {
-  content: ' ';
+  content: " ";
   position: absolute;
   top: 0;
   right: 0;
@@ -225,7 +226,7 @@ export default {
 }
 
 [data-type="3"] .dg2b-x::before {
-  content: ' ';
+  content: " ";
   position: absolute;
   top: calc(var(--lcars-divider-bottom-height) + 6px);
   right: 0;
@@ -235,7 +236,7 @@ export default {
 }
 
 [data-type="3"] .dg2b-x::after {
-  content: ' ';
+  content: " ";
   position: absolute;
   top: calc(-1 * var(--lcars-divider-bottom-height) / 5 * 3.5);
   right: 0;
