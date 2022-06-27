@@ -30,6 +30,7 @@ export default {
 
 .sidebar-top,
 .sidebar-bottom {
+  user-select: none;
   font-size: 1.3rem;
 }
 

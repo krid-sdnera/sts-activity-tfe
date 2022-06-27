@@ -29,6 +29,7 @@ export default {
 <style lang="scss">
 @import "~vuetify/src/styles/styles.sass";
 .meta-content {
+  user-select: none;
   grid-area: meta-content;
   flex-direction: row;
   margin-left: 20px;

@@ -27,6 +27,7 @@ export default {
   overflow: hidden;
   /* truncating a string with custom string is not supported in any browser except Firefox */
   text-overflow: "";
+  user-select: none;
 }
 
 .lcars-title[data-type="2"] {

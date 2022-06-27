@@ -15,5 +15,7 @@ export default {};
   height: 100%;
   width: 100%;
   color: white;
+  overflow-y: auto;
+  overflow-x: clip;
 }
 </style>

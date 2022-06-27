@@ -14,7 +14,8 @@ export default {};
 .main-content {
   grid-area: main-content;
 
-  margin-left: 20px;
   margin-top: 20px;
+
+  overflow-y: hidden;
 }
 </style>

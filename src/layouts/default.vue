@@ -69,11 +69,7 @@ function makeLCARSLabel() {
 export default {
   components: { jitsi },
   data() {
-    return {
-      drawer: false,
-
-      lcarsLabel: makeLCARSLabel(),
-    };
+    return {};
   },
   mounted() {
     initSounds();
@@ -82,11 +78,17 @@ export default {
     accessCode() {
       return this.$store.getters.accessCode;
     },
-
+    lcarsLabel() {
+      if (!this.accessCode) {
+        return makeLCARSLabel();
+      } else {
+        return `${makeLCARSLabel()} Terra Firma Explora`;
+      }
+    },
     sidebarTopMenu() {
       const items = [];
       if (!this.accessCode) {
-        items.push({ title: makeLCARSLabel(), to: "#" });
+        items.push({ title: makeLCARSLabel(), to: "/" });
         items.push({ title: makeLabels(), to: "#" });
       } else {
         items.push({ title: makeLCARSLabel(), to: "#" });
@@ -149,5 +151,13 @@ export default {
     min-height: unset;
     height: 100%;
   }
+  .v-main {
+    height: 100%;
+  }
+}
+
+.container > .row,
+.container > .row > .col {
+  height: 100%;
 }
 </style>
