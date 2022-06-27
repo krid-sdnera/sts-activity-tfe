@@ -13,6 +13,8 @@ a {
   text-decoration: none;
 }
 
+$grid-gutter: 5px;
+
 @import "~vuetify/src/styles/styles.sass";
 
 .v-card__title {

@@ -1,23 +1,30 @@
 <template>
   <LPage>
-    <v-row>
-      <v-col cols="12" v-if="uiShowVideo && !api">
-        <v-card tile :color="$lcarsColour()">
-          <v-card-title>
-            <h2>Comms</h2>
-          </v-card-title>
-        </v-card>
-      </v-col>
-      <v-col cols="12" v-if="uiShowVideo && !api">
-        <v-btn block color="green" @click="initialise()">connect</v-btn>
-      </v-col>
-      <v-col cols="12" v-show="uiShowVideo">
-        <div class="jitsi-container" ref="jitsi-container"></div>
-      </v-col>
-      <v-col cols="12" v-if="uiShowVideo && api">
-        <v-btn block color="red" @click="dispose()">disconnect</v-btn>
-      </v-col>
-    </v-row>
+    <client-only>
+      <v-row
+        class="comms-container"
+        :class="{
+          'dialog-open': anyDialogOpen,
+        }"
+      >
+        <v-col cols="12" v-if="uiShowVideo && !api">
+          <v-card tile :color="$lcarsColour()">
+            <v-card-title>
+              <h2>Comms</h2>
+            </v-card-title>
+          </v-card>
+        </v-col>
+        <v-col cols="12" v-if="uiShowVideo && !api">
+          <v-btn block color="green" tile @click="initialise()">connect</v-btn>
+        </v-col>
+        <v-col cols="12" v-show="uiShowVideo">
+          <div class="jitsi-container" ref="jitsi-container"></div>
+        </v-col>
+        <v-col cols="12" v-if="uiShowVideo && api">
+          <v-btn block color="red" tile @click="dispose()">disconnect</v-btn>
+        </v-col>
+      </v-row>
+    </client-only>
   </LPage>
 </template>
 
@@ -35,6 +42,9 @@ export default {
     accessCode() {
       return this.$store.getters.accessCode;
     },
+    anyDialogOpen() {
+      return this.$store.getters.anyDialogOpen;
+    },
   },
   watch: {
     accessCode() {
@@ -50,6 +60,7 @@ export default {
     initialise() {
       const el = this.$refs["jitsi-container"];
 
+      console.log("Trying to load jitsi");
       if (!window.JitsiMeetExternalAPI) {
         return;
       }
@@ -91,4 +102,16 @@ export default {
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.comms-container.dialog-open {
+  position: fixed;
+  z-index: 10000;
+  position: fixed;
+  z-index: 10000;
+  top: 91px;
+  right: 30px;
+  left: 66vw;
+}
+.jitsi-container {
+}
+</style>

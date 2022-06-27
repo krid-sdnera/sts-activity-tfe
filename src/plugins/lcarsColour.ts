@@ -12,9 +12,7 @@ const lcarsColourOptions = [
 export default (_, inject) => {
   inject("lcarsColour", () => {
     const colour =
-      lcarsColourOptions[
-        Math.floor(Math.random() * lcarsColourOptions.length) + 1
-      ];
+      lcarsColourOptions[Math.floor(Math.random() * lcarsColourOptions.length)];
     return `var(${colour})`;
   });
 };

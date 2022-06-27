@@ -6,7 +6,7 @@
         <slot></slot>
       </span>
     </div>
-    <div class="bar-right"></div>
+    <div class="bar-right" @click="$emit('close')">X</div>
   </div>
 </template>
 
@@ -92,6 +92,7 @@ export default {
 }
 
 .bar-right {
+  padding: 0 7px;
   width: var(--lcars-xs-title-size);
   height: var(--lcars-xs-title-size);
   border-top-right-radius: 50%;

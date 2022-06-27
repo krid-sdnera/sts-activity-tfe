@@ -1,17 +1,21 @@
 <template>
   <LPage>
-    <LDialog v-model="dialog" title="TITLE" v-slot="props">
-      <v-btn @click="props.close()">close</v-btn>
+    <LDialog
+      v-model="dialog"
+      name="mission-start"
+      title="Mission Details"
+      v-slot="props"
+    >
       <v-row>
-        <v-col cols="12">
-          <v-card tile>
+        <v-col cols="8">
+          <v-card tile :color="$lcarsColour()">
             <v-card-title>
               <h2>Mission Details</h2>
             </v-card-title>
           </v-card>
         </v-col>
-        <v-col cols="12">
-          <v-card tile>
+        <v-col cols="8">
+          <v-card tile :color="$lcarsColour()">
             <v-card-text class="text--primary">
               Our preliminary scans show that the atmosphere is currently
               incapable of supporting humanoid life. We must deploy an away team
@@ -20,8 +24,8 @@
           </v-card>
         </v-col>
 
-        <v-col cols="12">
-          <v-card tile>
+        <v-col cols="8">
+          <v-card tile :color="$lcarsColour()">
             <v-card-text>
               <v-checkbox
                 v-model="preReqSuit"
@@ -39,12 +43,13 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="8">
           <v-btn
             block
             tile
             color="green"
             :disabled="!missionReady"
+            :color="$lcarsColour()"
             @click="startMission()"
           >
             Start Mission
@@ -81,7 +86,7 @@ export default {
       }
 
       if (!this.missionReady) {
-        this.$router.push("/");
+        this.$router.push("/dashboard");
       }
     },
     preReqSuit() {

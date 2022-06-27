@@ -8,7 +8,7 @@
     <div
       v-for="(item, i) in items"
       :key="i"
-      :class="`bgcolor-${Math.floor(Math.random() * 9) + 1}`"
+      :style="`background-color: ${$lcarsColour()};`"
       class="sidebar-block"
       @click="playSound()"
     >

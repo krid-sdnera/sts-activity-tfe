@@ -18,7 +18,7 @@
       </v-col>
 
       <v-col cols="4">
-        <v-btn block tile :color="$lcarsColour()" to="/mission-start">
+        <v-btn block tile :color="$lcarsColour()" to="/mission">
           View mission details
         </v-btn>
       </v-col>
@@ -35,81 +35,18 @@
       </v-col>
 
       <v-col cols="4">
-        <v-btn block tile :color="$lcarsColour()" @click="dialog = true">
+        <v-btn block tile :color="$lcarsColour()" to="/life-support">
           Monitor Life Support
         </v-btn>
       </v-col>
     </v-row>
-    <LDialog v-model="dialog" title="TITLE" v-slot="props">
-      <v-btn @click="props.close()">close</v-btn>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test1</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-      <p>test2</p>
-    </LDialog>
   </LPage>
 </template>
 
 <script lang="ts">
 export default {
   data() {
-    return {
-      dialog: false,
-    };
+    return {};
   },
   computed: {},
   mounted() {},

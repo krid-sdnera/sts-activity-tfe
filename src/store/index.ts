@@ -11,6 +11,7 @@ export const state = () => ({
 
   accessCode: null as string | null,
   uiShowVideo: false as boolean,
+  dialogStatus: {} as Record<string, boolean>,
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -22,6 +23,8 @@ export const getters: GetterTree<RootState, RootState> = {
   // Lcars
   accessCode: (state) => state.accessCode,
   uiShowVideo: (state) => state.uiShowVideo,
+  anyDialogOpen: (state) =>
+    Object.values(state.dialogStatus).some((status) => status),
 };
 
 export const mutations: MutationTree<RootState> = {
@@ -55,6 +58,11 @@ export const mutations: MutationTree<RootState> = {
   setUiShowVideo: (state, value: boolean) => {
     Vue.set(state, "uiShowVideo", value);
   },
+  setDialogStatus: (state, value: boolean) => {
+    Object.entries(value).forEach(([name, status]) =>
+      Vue.set(state.dialogStatus, name, status)
+    );
+  },
 };
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -70,5 +78,8 @@ export const actions: ActionTree<RootState, RootState> = {
   },
   async setUiShowVideo({ commit }, value: boolean) {
     commit("setUiShowVideo", value);
+  },
+  async setDialogStatus({ commit }, value: Record<string, boolean>) {
+    commit("setDialogStatus", value);
   },
 };

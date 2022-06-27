@@ -2,7 +2,11 @@
   <v-dialog v-model="dialog" overlay-color="black" :overlay-opacity="1">
     <div class="dialog-container">
       <div>
-        <LcarsLCARSBar align="left" :color-scheme="colorScheme">
+        <LcarsLCARSBar
+          align="left"
+          :color-scheme="colorScheme"
+          @close="close()"
+        >
           {{ title }}
         </LcarsLCARSBar>
 
@@ -21,6 +25,7 @@
 <script lang="ts">
 export default {
   props: {
+    name: String,
     title: String,
     value: Boolean,
   },
@@ -33,11 +38,16 @@ export default {
   mounted() {
     this.dialog = this.value;
   },
+  beforeUnmount() {
+    this.$store.dispatch("setDialogStatus", { [this.name]: false });
+  },
   watch: {
     value() {
       this.dialog = this.value;
     },
     dialog() {
+      this.$store.dispatch("setDialogStatus", { [this.name]: this.dialog });
+
       this.$emit("input", this.dialog);
     },
   },
