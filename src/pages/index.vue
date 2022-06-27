@@ -17,7 +17,8 @@ export default {
     return {};
   },
   computed: {},
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch("resetApp");
     // this.$setBreadcrumbs([{ to: null, label: "Home" }]);
   },
 };

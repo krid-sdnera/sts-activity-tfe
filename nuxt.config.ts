@@ -24,7 +24,14 @@ export default defineNuxtConfig({
         href: "/materialdesignicons.min.css",
       },
     ],
-    script: [{ src: "https://sts.dirk.arends.com.au/external_api.js" }],
+    script: [
+      {
+        src:
+          process.env.ENV === "production"
+            ? "https://sts.dirk.arends.com.au/external_api.js"
+            : "https://meet.jit.si/external_api.js",
+      },
+    ],
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -54,6 +61,7 @@ export default defineNuxtConfig({
     { src: "~/plugins/alert.ts" },
     { src: "~/plugins/breadcrumb.ts" },
     { src: "~/plugins/filters.ts" },
+    { src: "~/plugins/lcarsColour.ts" },
     { src: "~/plugins/persistedState.client.js", mode: "client" },
   ],
 

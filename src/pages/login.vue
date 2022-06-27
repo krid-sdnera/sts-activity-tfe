@@ -9,10 +9,10 @@
           v-model="loginCode"
           color="red"
           error
+          :error-messages="errorMessage"
           full-width
           autofocus
           clearable
-          hide-details
           solo
           outlined
           :loading="loading"
@@ -34,6 +34,7 @@ export default {
       loginCode: null,
       loading: false,
       noActivityHandler: null,
+      errorMessage: null,
     };
   },
   mounted() {
@@ -48,11 +49,18 @@ export default {
       }, 20000);
     },
     async login() {
-      await this.$store.dispatch("registerLogin", this.loginCodeInput);
-
       this.loading = true;
+      this.errorMessage = "Checking Code..";
       await new Promise((r) => setTimeout(r, 2000));
+
       this.loading = false;
+      if (!/SAW\d{3}/.test(this.loginCode)) {
+        this.errorMessage = "Invalid Access Code";
+        return;
+      }
+
+      this.errorMessage = "";
+      await this.$store.dispatch("registerLogin", this.loginCode);
       clearTimeout(this.noActivityHandler);
 
       this.$createAlert({

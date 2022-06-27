@@ -10,6 +10,7 @@ export const state = () => ({
   // Lcars
 
   accessCode: null as string | null,
+  uiShowVideo: false as boolean,
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -18,6 +19,9 @@ export const getters: GetterTree<RootState, RootState> = {
   // Util getters
   alerts: (state) => state.alerts,
   breadcrumbs: (state) => state.breadcrumbs,
+  // Lcars
+  accessCode: (state) => state.accessCode,
+  uiShowVideo: (state) => state.uiShowVideo,
 };
 
 export const mutations: MutationTree<RootState> = {
@@ -41,8 +45,15 @@ export const mutations: MutationTree<RootState> = {
   setBreadcrumbs: (state, breadcrumbs: AppBreadcrumb[]) => {
     Vue.set(state, "breadcrumbs", breadcrumbs);
   },
+  resetApp: (state) => {
+    Vue.set(state, "accessCode", null);
+    Vue.set(state, "uiShowVideo", false);
+  },
   registerLogin: (state, accessCode: string) => {
     Vue.set(state, "accessCode", accessCode);
+  },
+  setUiShowVideo: (state, value: boolean) => {
+    Vue.set(state, "uiShowVideo", value);
   },
 };
 
@@ -51,7 +62,13 @@ export const actions: ActionTree<RootState, RootState> = {
   async addAlert({ commit }, appAlert: AppAlert) {
     commit("addAlert", appAlert);
   },
+  async resetApp({ commit }) {
+    commit("resetApp");
+  },
   async registerLogin({ commit }, accessCode: string) {
     commit("registerLogin", accessCode);
+  },
+  async setUiShowVideo({ commit }, value: boolean) {
+    commit("setUiShowVideo", value);
   },
 };
