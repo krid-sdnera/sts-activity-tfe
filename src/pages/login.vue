@@ -55,6 +55,11 @@ export default {
       this.loading = false;
       clearTimeout(this.noActivityHandler);
 
+      this.$createAlert({
+        message: "Access Granted",
+        type: "success",
+      });
+
       this.$router.push("/dashboard");
     },
   },

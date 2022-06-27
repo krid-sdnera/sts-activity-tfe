@@ -19,10 +19,9 @@
             </v-row>
           </v-container>
         </v-main>
+        <alerts></alerts>
       </v-app>
     </LContainer>
-
-    <alerts></alerts>
   </div>
 </template>
 

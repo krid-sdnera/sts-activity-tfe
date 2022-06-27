@@ -48,6 +48,9 @@ export const mutations: MutationTree<RootState> = {
 
 export const actions: ActionTree<RootState, RootState> = {
   async nuxtServerInit({ dispatch }) {},
+  async addAlert({ commit }, appAlert: AppAlert) {
+    commit("addAlert", appAlert);
+  },
   async registerLogin({ commit }, accessCode: string) {
     commit("registerLogin", accessCode);
   },
