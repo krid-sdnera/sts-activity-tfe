@@ -65,8 +65,8 @@ export default {
         return;
       }
 
-      // const domain = "sts.dirk.arends.com.au";
-      const domain = "meet.jit.si";
+      const domain = "sts.dirk.arends.com.au";
+      // const domain = "meet.jit.si";
       const options = {
         roomName: this.accessCode,
         width: 400,
