@@ -46,6 +46,7 @@ export default {
       clearTimeout(this.noActivityHandler);
       this.noActivityHandler = setTimeout(() => {
         this.$router.push("/");
+        this.$sounds().deny();
       }, 20000);
     },
     async login() {
@@ -55,6 +56,7 @@ export default {
 
       this.loading = false;
       if (!/SAW\d{3}/.test(this.loginCode)) {
+        this.$sounds().deny();
         this.errorMessage = "Invalid Access Code";
         return;
       }
@@ -62,6 +64,8 @@ export default {
       this.errorMessage = "";
       await this.$store.dispatch("registerLogin", this.loginCode);
       clearTimeout(this.noActivityHandler);
+
+      this.$sounds().panelBeep13.play();
 
       this.$createAlert({
         message: "Access Granted",

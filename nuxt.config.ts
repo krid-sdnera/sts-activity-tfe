@@ -63,6 +63,7 @@ export default defineNuxtConfig({
     { src: "~/plugins/filters.ts" },
     { src: "~/plugins/lcarsColour.ts" },
     { src: "~/plugins/persistedState.client.js", mode: "client" },
+    { src: "~/plugins/sounds.ts" },
   ],
 
   vuetify: {

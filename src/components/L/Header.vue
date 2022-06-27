@@ -1,6 +1,7 @@
 <template>
   <div class="lcars-title" :data-type="titleType">
     {{ title }}
+    <span @click="enterFullscreen()">[]</span>
   </div>
 </template>
 
@@ -9,6 +10,25 @@ export default {
   props: {
     title: String,
     titleType: { type: Number, default: Math.ceil(Math.random() * 2) },
+  },
+  methods: {
+    enterFullscreen() {
+      if (document.fullscreenEnabled) {
+        if (!document.fullscreenElement) {
+          document.documentElement
+            .requestFullscreen()
+            .then(() => {
+              this.$sounds().panelBeep13.play();
+            })
+            .catch((err) => {
+              this.$sounds().deny();
+            });
+        } else {
+          document.exitFullscreen();
+          this.$sounds().panelBeep08.play();
+        }
+      }
+    },
   },
 };
 </script>

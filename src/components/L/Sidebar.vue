@@ -10,6 +10,7 @@
       :key="i"
       :class="`bgcolor-${Math.floor(Math.random() * 9) + 1}`"
       class="sidebar-block"
+      @click="playSound()"
     >
       <nuxt-link :to="item.to">{{ item.title }}</nuxt-link>
     </div>
@@ -21,6 +22,21 @@ export default {
   props: {
     location: String,
     items: Array,
+  },
+  computed: {
+    accessCode() {
+      return this.$store.getters.accessCode;
+    },
+  },
+  methods: {
+    playSound() {
+      if (!this.accessCode) {
+        this.$sounds().deny();
+        return;
+      }
+
+      this.$sounds().playRandom();
+    },
   },
 };
 </script>
