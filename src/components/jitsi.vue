@@ -1,22 +1,21 @@
 <template>
   <LPage>
     <v-row>
-      <v-col cols="12" v-if="uiShowVideo">
+      <v-col cols="12" v-if="uiShowVideo && !api">
         <v-card tile :color="$lcarsColour()">
           <v-card-title>
             <h2>Comms</h2>
           </v-card-title>
         </v-card>
       </v-col>
-      <v-col cols="12" v-if="uiShowVideo">
-        <v-btn v-if="!api" block color="green" @click="initialise()">
-          connect
-        </v-btn>
-        <v-btn v-else block color="red" @click="dispose()">disconnect</v-btn>
+      <v-col cols="12" v-if="uiShowVideo && !api">
+        <v-btn block color="green" @click="initialise()">connect</v-btn>
       </v-col>
-      <v-col cols="12" v-if="!uiShowVideo"> </v-col>
       <v-col cols="12" v-show="uiShowVideo">
         <div class="jitsi-container" ref="jitsi-container"></div>
+      </v-col>
+      <v-col cols="12" v-if="uiShowVideo && api">
+        <v-btn block color="red" @click="dispose()">disconnect</v-btn>
       </v-col>
     </v-row>
   </LPage>

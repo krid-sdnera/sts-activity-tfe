@@ -2,7 +2,7 @@
   <div class="bar" :data-color-scheme="colorScheme" :data-align="align">
     <div class="bar-left"></div>
     <div class="bar-text">
-      <span v-if="hasTextContent">
+      <span>
         <slot></slot>
       </span>
     </div>
@@ -25,16 +25,7 @@ export default {
       },
     },
   },
-  computed: {
-    // Creates a prop to conditionally render slot content
-    hasTextContent() {
-      // if (this.$slots.default && !!this.$slots.default()[0].children.length) {
-      //   return true
-      // }
-
-      return true;
-    },
-  },
+  computed: {},
 };
 </script>
 
@@ -71,7 +62,7 @@ export default {
 
 .bar-text span {
   /* make actual capital letter height match height of row with a multiplier */
-  font-size: calc(var(--lcars-xs-title-size) * 1.36);
+  font-size: calc(var(--lcars-xs-title-size));
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
