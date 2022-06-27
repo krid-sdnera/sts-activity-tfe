@@ -1,54 +1,57 @@
 <template>
   <LPage>
-    <v-row>
-      <v-col cols="12">
-        <v-card tile>
-          <v-card-title>
-            <h2>Mission Details</h2>
-          </v-card-title>
-        </v-card>
-      </v-col>
-      <v-col cols="12">
-        <v-card tile>
-          <v-card-text class="text--primary">
-            Our preliminary scans show that the atmosphere is currently
-            incapable of supporting humanoid life. We must deploy an away team
-            with environmental suits to the surface for further analysis.
-          </v-card-text>
-        </v-card>
-      </v-col>
+    <LDialog v-model="dialog" title="TITLE" v-slot="props">
+      <v-btn @click="props.close()">close</v-btn>
+      <v-row>
+        <v-col cols="12">
+          <v-card tile>
+            <v-card-title>
+              <h2>Mission Details</h2>
+            </v-card-title>
+          </v-card>
+        </v-col>
+        <v-col cols="12">
+          <v-card tile>
+            <v-card-text class="text--primary">
+              Our preliminary scans show that the atmosphere is currently
+              incapable of supporting humanoid life. We must deploy an away team
+              with environmental suits to the surface for further analysis.
+            </v-card-text>
+          </v-card>
+        </v-col>
 
-      <v-col cols="12">
-        <v-card tile>
-          <v-card-text>
-            <v-checkbox
-              v-model="preReqSuit"
-              label="EV Suits equipped"
-            ></v-checkbox>
-            <v-checkbox
-              v-model="preReqVisuals"
-              label="Visual link operational"
-            ></v-checkbox>
-            <v-checkbox
-              v-model="preReqComs"
-              label="Comms chanel open"
-            ></v-checkbox>
-            <v-checkbox v-model="preReqFunny" :label="funnyText"></v-checkbox>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col cols="12">
-        <v-btn
-          block
-          tile
-          color="green"
-          :disabled="!missionReady"
-          to="/mission-details"
-        >
-          Start Mission
-        </v-btn>
-      </v-col>
-    </v-row>
+        <v-col cols="12">
+          <v-card tile>
+            <v-card-text>
+              <v-checkbox
+                v-model="preReqSuit"
+                label="EV Suits equipped"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="preReqVisuals"
+                label="Visual link operational"
+              ></v-checkbox>
+              <v-checkbox
+                v-model="preReqComs"
+                label="Comms chanel open"
+              ></v-checkbox>
+              <v-checkbox v-model="preReqFunny" :label="funnyText"></v-checkbox>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col cols="12">
+          <v-btn
+            block
+            tile
+            color="green"
+            :disabled="!missionReady"
+            @click="startMission()"
+          >
+            Start Mission
+          </v-btn>
+        </v-col>
+      </v-row>
+    </LDialog>
   </LPage>
 </template>
 
@@ -62,6 +65,7 @@ function get_random(list) {
 export default {
   data() {
     return {
+      dialog: false,
       preReqSuit: false,
       preReqVisuals: false,
       preReqComs: false,
@@ -70,6 +74,16 @@ export default {
     };
   },
   watch: {
+    dialog() {
+      if (this.dialog) {
+        // opening dialog, ignore
+        return;
+      }
+
+      if (!this.missionReady) {
+        this.$router.push("/");
+      }
+    },
     preReqSuit() {
       this.$store.dispatch("setUiShowVideo", this.preReqSuit);
     },
@@ -87,7 +101,14 @@ export default {
       );
     },
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.dialog = true;
+  },
+  methods: {
+    startMission() {
+      this.dialog = false;
+      this.$router.push("/mission-details");
+    },
+  },
 };
 </script>

@@ -18,7 +18,7 @@
       </v-col>
 
       <v-col cols="4">
-        <v-btn block tile :color="$lcarsColour()" @click="dialog = true">
+        <v-btn block tile :color="$lcarsColour()" to="/mission-start">
           View mission details
         </v-btn>
       </v-col>
@@ -108,7 +108,7 @@
 export default {
   data() {
     return {
-      dialog: true,
+      dialog: false,
     };
   },
   computed: {},
