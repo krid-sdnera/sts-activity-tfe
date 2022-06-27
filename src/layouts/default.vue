@@ -69,54 +69,71 @@ function makeLCARSLabel() {
 export default {
   components: { jitsi },
   data() {
-    const sidebarLabelType = Math.ceil(Math.random() * 5);
-
     return {
       drawer: false,
-      sidebarTopMenu: [
-        { title: "LCARS 09943", to: "/" },
-        { title: "23452", to: "/" },
-      ],
-      sidebarBottomMenu: [
-        { title: "Home", to: "/" },
-        { title: "Star Map", to: "/" },
-        {
-          title: "GEN STORY",
-          to: "/generate-story",
-        },
-        {
-          title: "Wiring",
-          to: "/minigames/amongus-wiring",
-        },
-      ],
-      metaMenu: [
-        { title: "98765", to: "/" },
-        { title: "23452", to: "/" },
-        { title: "5486", to: "/" },
-        { title: "457689", to: "/" },
-      ],
-      monsterAcronymIndex: 0,
-      title: "Title",
-      longTitle: "Long titile",
-      titleType: Math.ceil(Math.random() * 2),
+
       lcarsLabel: makeLCARSLabel(),
-      numbers: new Array(6).fill(0).map(function (item, index) {
-        return makeLabels(sidebarLabelType);
-      }),
-      colorScheme: Math.random() > 0.75 ? 2 : 1,
-      starChartType: Math.random() > 0.5 ? "nav" : "planet",
     };
   },
   mounted() {
     initSounds();
   },
   computed: {
-    displayLcarsLabel() {
-      if (Math.random() > 0.35) {
-        return true;
+    accessCode() {
+      return this.$store.getters.accessCode;
+    },
+
+    sidebarTopMenu() {
+      const items = [];
+      if (!this.accessCode) {
+        items.push({ title: makeLCARSLabel(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+      } else {
+        items.push({ title: makeLCARSLabel(), to: "#" });
+        items.push({ title: `Restrict Access ${makeLabels(1)}`, to: "/" });
       }
 
-      return false;
+      return items;
+    },
+    sidebarBottomMenu() {
+      const items = [];
+      if (!this.accessCode) {
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+      } else {
+        items.push({
+          title: `Mission Details ${makeLabels()}`,
+          to: "/dashboard",
+        });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({
+          title: `Away Team Vitals ${makeLabels()}`,
+          to: "/life-support",
+        });
+        items.push({ title: makeLabels(), to: "#" });
+      }
+
+      return items;
+    },
+    metaMenu() {
+      const items = [];
+      if (!this.accessCode) {
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+      } else {
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+        items.push({ title: makeLabels(), to: "#" });
+      }
+
+      return items;
     },
   },
 };
