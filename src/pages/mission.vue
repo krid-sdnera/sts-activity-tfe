@@ -17,7 +17,7 @@ export default {
     if (!this.missionStarted) {
       this.$router.push("/mission-start");
     } else {
-      this.$router.push("/mission-detailsstart");
+      this.$router.push("/mission-list");
     }
   },
   methods: {},

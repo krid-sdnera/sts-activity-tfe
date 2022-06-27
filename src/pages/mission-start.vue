@@ -8,14 +8,14 @@
     >
       <v-row>
         <v-col cols="8">
-          <v-card tile :color="$lcarsColour()">
+          <v-card tile :color="colorRand[0]">
             <v-card-title>
               <h2>Mission Details</h2>
             </v-card-title>
           </v-card>
         </v-col>
         <v-col cols="8">
-          <v-card tile :color="$lcarsColour()">
+          <v-card tile :color="colorRand[1]">
             <v-card-text class="text--primary">
               Our preliminary scans show that the atmosphere is currently
               incapable of supporting humanoid life. We must deploy an away team
@@ -25,21 +25,28 @@
         </v-col>
 
         <v-col cols="8">
-          <v-card tile :color="$lcarsColour()">
+          <v-card tile :color="colorRand[2]">
             <v-card-text>
               <v-checkbox
                 v-model="preReqSuit"
                 label="EV Suits equipped"
+                dense
               ></v-checkbox>
               <v-checkbox
                 v-model="preReqVisuals"
                 label="Visual link operational"
+                dense
               ></v-checkbox>
               <v-checkbox
                 v-model="preReqComs"
                 label="Comms chanel open"
+                dense
               ></v-checkbox>
-              <v-checkbox v-model="preReqFunny" :label="funnyText"></v-checkbox>
+              <v-checkbox
+                v-model="preReqFunny"
+                :label="funnyText"
+                dense
+              ></v-checkbox>
             </v-card-text>
           </v-card>
         </v-col>
@@ -49,7 +56,7 @@
             tile
             color="green"
             :disabled="!missionReady"
-            :color="$lcarsColour()"
+            :color="colorRand[3]"
             @click="startMission()"
           >
             Start Mission
@@ -76,6 +83,9 @@ export default {
       preReqComs: false,
       preReqFunny: null,
       funnyReqs: ["Underwear on backwards or inside out", "Shirt on backwards"],
+      colorRand: Array(10)
+        .fill(0)
+        .map((_) => this.$lcarsColour()),
     };
   },
   watch: {
@@ -110,9 +120,10 @@ export default {
     this.dialog = true;
   },
   methods: {
-    startMission() {
+    async startMission() {
       this.dialog = false;
-      this.$router.push("/mission-details");
+      await this.$store.dispatch("pickMission");
+      this.$router.push("/mission-list");
     },
   },
 };

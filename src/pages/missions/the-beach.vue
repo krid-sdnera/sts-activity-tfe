@@ -2,20 +2,20 @@
   <LPage>
     <LDialog
       v-model="dialog"
-      name="mission-details"
+      name="mission-the-beach"
       title="Mission Details"
       v-slot="props"
     >
       <v-row>
         <v-col cols="8">
-          <v-card tile>
+          <v-card tile :color="$lcarsColour()">
             <v-card-title>
               <h2>Mission Details</h2>
             </v-card-title>
           </v-card>
         </v-col>
         <v-col cols="8">
-          <MissionMain></MissionMain>
+          <MissionTheBeach></MissionTheBeach>
         </v-col>
       </v-row>
     </LDialog>
@@ -26,10 +26,14 @@
 export default {
   data() {
     return {
-      dialog: false,
+      dialog: true,
     };
   },
-  computed: {},
+  computed: {
+    missionStarted() {
+      return this.$store.getters.missionStarted;
+    },
+  },
   watch: {
     dialog() {
       if (this.dialog) {
@@ -37,19 +41,14 @@ export default {
         return;
       }
 
-      // if () {
-      //   this.$router.push("/");
-      // }
+      this.$router.push("/mission-list");
     },
   },
   mounted() {
-    this.dialog = true;
+    if (!this.missionStarted) {
+      this.$router.push("/mission-start");
+    }
   },
-  methods: {
-    closeMission() {
-      this.dialog = false;
-      this.$router.push("/dashboard");
-    },
-  },
+  methods: {},
 };
 </script>

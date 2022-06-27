@@ -3,6 +3,10 @@ import { ActionTree, GetterTree, MutationTree } from "vuex";
 import { AppAlert } from "../common/alert";
 import { AppBreadcrumb } from "../common/breadcrumb";
 
+interface Mission {
+  name: string;
+}
+
 export const state = () => ({
   // UI
   alerts: [] as AppAlert[],
@@ -12,6 +16,9 @@ export const state = () => ({
   accessCode: null as string | null,
   uiShowVideo: false as boolean,
   dialogStatus: {} as Record<string, boolean>,
+
+  // Mission
+  mission: null as Mission | null,
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -25,6 +32,10 @@ export const getters: GetterTree<RootState, RootState> = {
   uiShowVideo: (state) => state.uiShowVideo,
   anyDialogOpen: (state) =>
     Object.values(state.dialogStatus).some((status) => status),
+
+  // Mission
+  missionStarted: (state) => !!state.mission,
+  mission: (state) => state.mission,
 };
 
 export const mutations: MutationTree<RootState> = {
@@ -51,6 +62,7 @@ export const mutations: MutationTree<RootState> = {
   resetApp: (state) => {
     Vue.set(state, "accessCode", null);
     Vue.set(state, "uiShowVideo", false);
+    Vue.set(state, "mission", false);
   },
   registerLogin: (state, accessCode: string) => {
     Vue.set(state, "accessCode", accessCode);
@@ -62,6 +74,9 @@ export const mutations: MutationTree<RootState> = {
     Object.entries(value).forEach(([name, status]) =>
       Vue.set(state.dialogStatus, name, status)
     );
+  },
+  setMission: (state, mission: Mission) => {
+    Vue.set(state, "mission", mission);
   },
 };
 
@@ -81,5 +96,13 @@ export const actions: ActionTree<RootState, RootState> = {
   },
   async setDialogStatus({ commit }, value: Record<string, boolean>) {
     commit("setDialogStatus", value);
+  },
+  async pickMission({ commit }) {
+    const missions = ["the-cave", "the-beach", "the-mountain"];
+
+    const mission: Mission = {
+      name: missions[Math.floor(Math.random() * missions.length)],
+    };
+    commit("setMission", mission);
   },
 };
