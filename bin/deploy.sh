@@ -15,5 +15,6 @@ echo Uploading docker-compose.yml
 rsync -a docker-compose.yml ${HOST}:/root/sts-webapp/
 
 echo Starting container
+ssh ${HOST} "cd /root/sts-webapp; docker-compose down"
 ssh ${HOST} "cd /root/sts-webapp; docker-compose up -d"
 
