@@ -179,6 +179,10 @@ export default {
       this.i = this.i + 1;
       this.$sounds().playRandom();
     },
+    storeMission() {
+      this.$sounds().playRandom();
+      this.$router.push("/mission-recall");
+    },
   },
 };
 </script>

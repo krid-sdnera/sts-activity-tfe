@@ -35,12 +35,13 @@ export default {
   },
   computed: {
     missions() {
-      const mission = this.$store.getters.mission;
+      // const mission = this.$store.getters.mission;
+      const missions = [{ name: "the-cave" }, { name: "the-lake" }];
 
-      if (!mission) {
+      if (!missions) {
         return [];
       }
-      return [mission];
+      return missions;
     },
   },
   watch: {

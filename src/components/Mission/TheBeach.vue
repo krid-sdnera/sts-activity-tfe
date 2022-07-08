@@ -61,8 +61,9 @@
                 <v-icon color="black">mdi-numeric-2-box</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                Collect two different ice samples. Look for ice from different
-                areas in different shapes.
+                Add a spatula of your soil sample to a test tube and mix with an
+                equal volume of distilled water. You will need to shake the test
+                tube thoroughly to make sure it is mixed.
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
@@ -70,26 +71,21 @@
                 <v-icon color="black">mdi-numeric-3-box</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                Place one of your ice samples into a beaker of liquid water.
-                <ul>
-                  <li>
-                    If the ice is made from frozen water H2O it should float
-                    because solid water is less dense than liquid water. The ice
-                    should slowly melt in the water.
-                  </li>
-                  <li>
-                    If the ice is made from frozen carbon dioxide CO2 it should
-                    sublimate. This means it will turn directly from a solid to
-                    a gas (it will skip the liquid phase). It will be more dense
-                    than the liquid water so it will sink and you will be able
-                    to observe the bubbles of gas being produced.
-                  </li>
-                </ul>
+                Add 6-8 drops of universal indicator to your test tube.
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
               <v-list-item-icon>
                 <v-icon color="black">mdi-numeric-4-box</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                Compare the colour of the liquid in your test tube with the
+                colour chart and determine the pH of the soil sample.
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon color="black">mdi-numeric-5-box</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 Report your results back to mission command and clean up your
@@ -103,18 +99,9 @@
     <v-col cols="12" v-if="i >= 6">
       <v-card :color="colorRand[6]" tile>
         <v-card-text>
-          Starfleet want to know which rock fizzed. Please report back this
+          Starfleet want to know what the pH level was. Please report back this
           information:
-          <v-checkbox
-            v-model="rockValue"
-            value="red"
-            label="Red rock"
-          ></v-checkbox>
-          <v-checkbox
-            v-model="rockValue"
-            value="white"
-            label="White rock"
-          ></v-checkbox>
+          <v-text-field v-model="phValue" label="pH Level"></v-text-field>
         </v-card-text>
       </v-card>
     </v-col>
@@ -153,7 +140,7 @@ export default {
         .fill(0)
         .map((_) => this.$lcarsColour()),
       interval: null,
-      rockValue: null,
+      phValue: null,
       loadingNextMessage: false,
     };
   },
@@ -174,6 +161,10 @@ export default {
 
       this.i = this.i + 1;
       this.$sounds().playRandom();
+    },
+    storeMission() {
+      this.$sounds().playRandom();
+      this.$router.push("/mission-recall");
     },
   },
 };

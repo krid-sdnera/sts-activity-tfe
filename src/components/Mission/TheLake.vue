@@ -31,16 +31,10 @@
         <v-card-text>
           <h3>Background:</h3>
 
-          The density and type of gases in the atmosphere along with the
-          temperature ranges experienced will determine whether water ice, or
-          other any other forms of ice, can exist in a region. The presence of
-          both carbon dioxide and water are good signs that a planet is suitable
-          for life, so we will be looking for these compounds. As you move
-          higher in altitude (away from the surface of a planet) the atmosphere
-          becomes thinner so there are less gas particles creating pressure.
-          This decrease in pressure leads to a decrease in temperature so
-          mountainous regions are where you are most likely to find ice on this
-          planet.
+          The acidity of a water sample tells us a lot about the type of
+          environment the water is formed in and the types of living organisms
+          that might be able to live there. Water with a pH between 6-8 will be
+          best for supporting carbon and nitrogen based plant and aquatic life.
         </v-card-text>
       </v-card>
     </v-col>
@@ -49,24 +43,26 @@
         <v-card-text>
           <h3>Instructions:</h3>
 
+          We need to collect water samples from the lake and determine their pH.
+
           <v-list :color="colorRand[5]">
             <v-list-item>
               <v-list-item-icon>
                 <v-icon color="black">mdi-numeric-1-box</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                Warning: ice that is made from carbon dioxide (called dry ice)
-                is cold enough to burn you.<br />
-                Only use tongs to touch the ice samples on this planet.
+                Collect water samples of two different types of water from
+                around the beach area. Test the two water samples. You only need
+                enough to fill a quarter of your vial.
               </v-list-item-content>
             </v-list-item>
+
             <v-list-item>
               <v-list-item-icon>
                 <v-icon color="black">mdi-numeric-2-box</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                Collect two different ice samples. Look for ice from different
-                areas in different shapes.
+                Add 6-8 drops of universal indicator to your test tube.
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
@@ -74,21 +70,8 @@
                 <v-icon color="black">mdi-numeric-3-box</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                Place one of your ice samples into a beaker of liquid water.
-                <ul>
-                  <li>
-                    If the ice is made from frozen water H2O it should float
-                    because solid water is less dense than liquid water. The ice
-                    should slowly melt in the water.
-                  </li>
-                  <li>
-                    If the ice is made from frozen carbon dioxide CO2 it should
-                    sublimate. This means it will turn directly from a solid to
-                    a gas (it will skip the liquid phase). It will be more dense
-                    than the liquid water so it will sink and you will be able
-                    to observe the bubbles of gas being produced.
-                  </li>
-                </ul>
+                Compare the colour of the liquid in your test tube with the
+                colour chart and determine the pH of the water sample.
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
@@ -107,9 +90,9 @@
     <v-col cols="12" v-if="i >= 6">
       <v-card :color="colorRand[6]" tile>
         <v-card-text>
-          Starfleet want to know the results of this test. Please report back
-          this information:
-          <v-text-field v-model="rockValue" label="Ice Result"></v-text-field>
+          Starfleet want to know what the pH level was. Please report back this
+          information:
+          <v-text-field v-model="phValue" label="pH Level"></v-text-field>
         </v-card-text>
       </v-card>
     </v-col>
@@ -148,7 +131,7 @@ export default {
         .fill(0)
         .map((_) => this.$lcarsColour()),
       interval: null,
-      rockValue: null,
+      phValue: null,
       loadingNextMessage: false,
     };
   },

@@ -98,7 +98,7 @@ export const actions: ActionTree<RootState, RootState> = {
     commit("setDialogStatus", value);
   },
   async pickMission({ commit }) {
-    const missions = ["the-cave", "the-beach", "the-mountain"];
+    const missions = ["the-cave", "the-lake"];
 
     const mission: Mission = {
       name: missions[Math.floor(Math.random() * missions.length)],
