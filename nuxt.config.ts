@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     ],
     script: [
       {
-        src: "https://meet.jit.si/external_api.js",
+        src: "https://sts.dirk.arends.com.au/external_api.js",
         // process.env.ENV === "production"
         // ? "https://sts.dirk.arends.com.au/external_api.js"
         // : "https://meet.jit.si/external_api.js",
