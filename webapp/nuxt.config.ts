@@ -1,13 +1,26 @@
-import { defineNuxtConfig } from "@nuxt/bridge";
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 const baseUrl =
   process.env.ENV === "production"
     ? "http://web.sts.dirk.arends.com.au"
     : "http://localhost:3000";
 
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  srcDir: "src/",
-  target: "server",
+  ssr: false,
+  devtools: { enabled: true },
+  runtimeConfig: {},
+  vite: {
+    optimizeDeps: {
+      include: ["fast-deep-equal"],
+    },
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+  },
+
   /*
    ** Headers of the page
    ** Doc: https://vue-meta.nuxtjs.org/api/#metainfo-properties
@@ -34,36 +47,18 @@ export default defineNuxtConfig({
     ],
   },
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  build: {
+    transpile: ["vuetify"],
+  },
 
-  /*
-   ** Nuxt.js modules
-   ** Doc: https://modules.nuxtjs.org
-   */
-  modules: [],
-  buildModules: [
-    "@nuxtjs/vuetify",
-    "@nuxtjs/pwa",
-    "vue-browser-detect-plugin/nuxt",
-  ],
-  /*
-   ** Global CSS
-   ** Doc: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-css
-   */
-  css: [],
-
-  /*
-   ** Plugins to load before mounting the App
-   ** Doc: https://nuxtjs.org/docs/2.x/directory-structure/plugins
-   */
-  plugins: [
-    { src: "~/plugins/alert.ts" },
-    { src: "~/plugins/breadcrumb.ts" },
-    { src: "~/plugins/filters.ts" },
-    { src: "~/plugins/lcarsColour.ts" },
-    { src: "~/plugins/persistedState.client.js", mode: "client" },
-    { src: "~/plugins/sounds.ts" },
+  modules: [
+    (_options, nuxt) => {
+      nuxt.hooks.hook("vite:extendConfig", (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
+    },
+    //...
   ],
 
   vuetify: {
@@ -77,9 +72,6 @@ export default defineNuxtConfig({
       dark: true,
     },
   },
-
-  privateRuntimeConfig: {},
-  publicRuntimeConfig: {},
 });
 
 export interface RuntimeConfig {

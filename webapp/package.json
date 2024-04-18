@@ -3,27 +3,32 @@
   "version": "1.0.0",
   "description": "This is a basic companion webpage for the Star Trek Survival Activity Terra Firma Explora",
   "author": "Star Trek Survival Activity Terra Firma Explora",
+  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "MINIMAL=1 nuxt",
     "build": "nuxt build",
-    "start": "node .output/server/index.mjs"
+    "start": "node  .output/server/index.mjs",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "start-docker": "npm run start"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "bigint-polyfill": "^0.1.0",
     "howler": "^2.2.3",
-    "luxon": "^2.0.2",
-    "vue-browser-detect-plugin": "^0.1.18",
-    "vuex": "^3.6.2",
-    "vuex-persistedstate": "^4.1.0"
+    "luxon": "^3.4.4"
   },
   "devDependencies": {
-    "@nuxt/bridge": "npm:@nuxt/bridge-edge",
-    "@nuxt/types": "^2.15.8",
-    "@nuxtjs/pwa": "3.3.5",
-    "@nuxtjs/vuetify": "^1.12.1",
+    "@nuxt/devtools": "latest",
     "@types/howler": "^2.2.7",
-    "@types/luxon": "^2.3.0",
-    "nuxt-edge": "latest"
+    "@types/luxon": "^3.3.5",
+    "nuxt": "^3.8.1",
+    "sass": "^1.75.0",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5",
+    "vuetify": "^3.5.16"
   }
 }

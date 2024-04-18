@@ -1,4 +1,4 @@
-import { Store } from "vuex/types/index";
+// import { Store } from "vuex/types/index";
 
 export interface AppAlertOptions {
   heading?: string;
@@ -41,6 +41,6 @@ export class AppAlert {
   }
 }
 
-export function createAlert(store: Store<any>, options: AppAlertOptions) {
+export function createAlert(store: any, options: AppAlertOptions) {
   store.dispatch(`addAlert`, new AppAlert(options));
 }

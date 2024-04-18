@@ -1,4 +1,4 @@
-import { Store } from "vuex/types/index";
+// import { Store } from "vuex/types/index";
 
 export interface AppBreadcrumbOptions {
   to: string | null;
@@ -18,7 +18,7 @@ export class AppBreadcrumb {
 }
 
 export async function setBreadcrumbs(
-  store: Store<any>,
+  store: any,
   crumbOptions: AppBreadcrumbOptions[]
 ) {
   return store.dispatch(
