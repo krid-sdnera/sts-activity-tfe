@@ -1,0 +1,67 @@
+include:
+  - ./jitsi-meet/docker-compose.yml
+
+services:
+  app:
+    build: ./webapp
+    restart: unless-stopped
+    networks:
+      - game
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    networks:
+      - game
+      - meet.jitsi
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./configuration/nginx/:/etc/nginx/conf.d/
+      - ./nginx/ssl:/etc/nginx/ssl/:ro
+      - ./nginx/default/:/usr/share/nginx/html:ro
+    depends_on:
+      - app
+      - web
+
+  kea:
+    # https://gitlab.isc.org/isc-projects/kea-docker
+    image: docker.cloudsmith.io/isc/docker/kea-dhcp4:2.5.2
+    restart: unless-stopped
+    networks:
+      - kea
+    ports:
+      - 192.168.51.1:67:67/tcp
+      - 192.168.51.1:67:67/udp
+    volumes:
+      - ./configuration/isc-kea/kea-dhcp4.conf:/etc/kea/kea-dhcp4.conf
+
+  bind:
+    # https://hub.docker.com/r/internetsystemsconsortium/bind9
+    image: internetsystemsconsortium/bind9:9.18
+    restart: unless-stopped
+    networks:
+      - game
+    ports:
+      - 53:53/udp
+      - 53:53/tcp
+    volumes:
+      - ./configuration/bind/:/etc/bind
+
+networks:
+  kea:
+    driver: ipvlan
+    driver_opts:
+      parent: br0
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.51.0/24"
+  game:
+    driver: bridge

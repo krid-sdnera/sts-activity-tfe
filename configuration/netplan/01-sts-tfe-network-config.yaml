@@ -1,0 +1,29 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp2s0:
+      dhcp4: true
+      optional: true
+      dhcp4-overrides:
+        use-dns: false
+    enp3s0:
+      dhcp4: false
+      optional: true
+    enp4s0:
+      dhcp4: false
+      optional: true
+    enp5s0:
+      dhcp4: false
+      optional: true
+  bridges:
+    br0:
+      addresses:
+        - 192.168.51.1/24
+      nameservers:
+        search: [darends.scouthack.com]
+        addresses: [192.168.51.1, 8.8.8.8]
+      interfaces:
+        - enp3s0
+        - enp4s0
+        - enp5s0

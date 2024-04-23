@@ -48,9 +48,9 @@ function initialise() {
     return;
   }
 
-  // const domain = "sts.dirk.arends.com.au";
+  const domain = "jitsi.darends.scouthack.com";
   // const domain = "meet.jit.si";
-  const domain = "192.168.20.117:8443";
+  // const domain = "192.168.20.117:8443";
   const options = {
     roomName: accessCode.value,
     width: 400,

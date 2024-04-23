@@ -1,0 +1,18 @@
+$ORIGIN darends.scouthack.com.
+$TTL 1h ;
+@               IN  SOA dns.darends.scouthack.com. hostmaster.darends.scouthack.com. (
+                    2024021501   ; serial number
+                    1h           ; refresh
+                    15m          ; retry
+                    1d           ; expire
+                    15m        ) ; minimum
+
+@               NS  ns
+@               A   192.168.51.1
+ns              A   192.168.51.1
+dns             A   192.168.51.1
+dhcp            A   192.168.51.2
+
+jitsi           A   192.168.51.1
+
+tfe             A   192.168.51.1

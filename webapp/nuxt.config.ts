@@ -2,14 +2,13 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 const baseUrl =
   process.env.ENV === "production"
-    ? "http://web.sts.dirk.arends.com.au"
+    ? "http://tfe.darends.scouthack.com"
     : "http://localhost:3000";
 
-const jitsiDomain = true
-  ? "192.168.20.117:8443"
-  : process.env.ENV === "production"
-  ? "jitsi.sts.dirk.arends.com.au"
-  : "meet.jit.si";
+const jitsiDomain =
+  process.env.ENV === "production"
+    ? "jitsi.darends.scouthack.com"
+    : "meet.jit.si";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
