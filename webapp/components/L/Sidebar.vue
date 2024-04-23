@@ -1,14 +1,35 @@
+<script setup lang="ts">
+const { sounds } = useSounds();
+const store = useStore();
+
+const props = defineProps<{
+  location: "top" | "bottom";
+  items: { title: string; to: string }[];
+}>();
+
+const accessCode = store.getters.accessCode;
+
+function playSound() {
+  if (!accessCode.value) {
+    sounds.deny();
+    return;
+  }
+
+  sounds.playRandom();
+}
+</script>
+
 <template>
   <div
     :class="{
-      'sidebar-top': location === 'top',
-      'sidebar-bottom': location === 'bottom',
+      'sidebar-top': props.location === 'top',
+      'sidebar-bottom': props.location === 'bottom',
     }"
   >
     <div
       v-for="(item, i) in items"
       :key="i"
-      :style="`background-color: ${$lcarsColour()};`"
+      :style="`background-color: ${useLcarsColor()};`"
       class="sidebar-block"
       @click="playSound()"
     >
@@ -17,32 +38,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  props: {
-    location: String,
-    items: Array,
-  },
-  computed: {
-    accessCode() {
-      return this.$store.getters.accessCode;
-    },
-  },
-  methods: {
-    playSound() {
-      if (!this.accessCode) {
-        this.$sounds().deny();
-        return;
-      }
-
-      this.$sounds().playRandom();
-    },
-  },
-};
-</script>
-
 <style lang="scss" scoped>
-@import "~vuetify/src/styles/styles.sass";
+// @import "~vuetify/src/styles/styles.sass";
 
 .sidebar-top,
 .sidebar-bottom {

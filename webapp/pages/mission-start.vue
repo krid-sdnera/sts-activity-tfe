@@ -1,3 +1,59 @@
+<script setup lang="ts">
+useAccess().requireAccessCode();
+
+import { DateTime, Duration, Interval } from "luxon";
+
+function get_random<T>(list: T[]): T {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+const store = useStore();
+const router = useRouter();
+
+const dialog = ref<boolean>(false);
+const preReqSuit = ref<boolean>(false);
+const preReqVisuals = ref<boolean>(false);
+const preReqComs = ref<boolean>(false);
+const preReqFunny = ref<boolean>(null);
+const funnyReqs = [
+  "Underwear on backwards or inside out",
+  "Shirt on backwards",
+];
+const colorRand = Array(10)
+  .fill(0)
+  .map((_) => useLcarsColor());
+
+watch(
+  preReqSuit,
+  () => {
+    store.mutations.setUiShowVideo(preReqSuit.value);
+  },
+  { immediate: true }
+);
+
+const funnyText = computed(() => {
+  return get_random(funnyReqs);
+});
+const missionReady = computed(() => {
+  return (
+    preReqSuit.value &&
+    preReqVisuals.value &&
+    preReqComs.value &&
+    preReqFunny.value === false
+  );
+});
+
+onMounted(() => {
+  dialog.value = true;
+});
+
+async function startMission() {
+  dialog.value = false;
+  await store.actions.pickMission();
+  router.push("/mission-list");
+}
+</script>
+
 <template>
   <LPage>
     <LDialog
@@ -66,65 +122,3 @@
     </LDialog>
   </LPage>
 </template>
-
-<script lang="ts">
-import { DateTime, Duration, Interval } from "luxon";
-
-function get_random(list) {
-  return list[Math.floor(Math.random() * list.length)];
-}
-
-export default {
-  data() {
-    return {
-      dialog: false,
-      preReqSuit: false,
-      preReqVisuals: false,
-      preReqComs: false,
-      preReqFunny: null,
-      funnyReqs: ["Underwear on backwards or inside out", "Shirt on backwards"],
-      colorRand: Array(10)
-        .fill(0)
-        .map((_) => this.$lcarsColour()),
-    };
-  },
-  watch: {
-    dialog() {
-      if (this.dialog) {
-        // opening dialog, ignore
-        return;
-      }
-
-      if (!this.missionReady) {
-        this.$router.push("/dashboard");
-      }
-    },
-    preReqSuit() {
-      this.$store.dispatch("setUiShowVideo", this.preReqSuit);
-    },
-  },
-  computed: {
-    funnyText() {
-      return get_random(this.funnyReqs);
-    },
-    missionReady() {
-      return (
-        this.preReqSuit &&
-        this.preReqVisuals &&
-        this.preReqComs &&
-        this.preReqFunny === false
-      );
-    },
-  },
-  mounted() {
-    this.dialog = true;
-  },
-  methods: {
-    async startMission() {
-      this.dialog = false;
-      await this.$store.dispatch("pickMission");
-      this.$router.push("/mission-list");
-    },
-  },
-};
-</script>

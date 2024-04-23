@@ -1,85 +1,68 @@
-<template>
-  <button
-    :class="{
-      'button-square': square,
-      'button-rounded-left': roundedLeft,
-      'button-rounded-right': roundedRight,
-      'bgcolor-1': color === 1,
-      'bgcolor-2': color === 2,
-      'bgcolor-3': color === 3,
-      'bgcolor-4': color === 4,
-      'bgcolor-5': color === 5,
-      'bgcolor-6': color === 6,
-      'bgcolor-7': color === 7,
-      'bgcolor-8': color === 8,
-      'bgcolor-9': color === 9,
-    }"
-    v-on:click="handleClick"
-  >
-    {{ label }}
-  </button>
-</template>
-
-<script>
+<script setup lang="ts">
 import { makeRandomNumber } from "~/common/utils";
-import { sounds } from "~/common/utils/sounds";
+const { sounds } = useSounds();
 
-export default {
-  name: "lcars-button",
-  props: {
-    // Label can be passed in as a prop, or one is randomly selected
-    label: {
-      default: () => {
-        return makeRandomNumber(5, false);
-      },
-      type: String,
-    },
-    // Background color can be passed in as a prop, or one is randomly selected
-    color: {
-      default: () => {
-        return Math.floor(Math.random() * 9) + 1;
-      },
-      type: Number,
-    },
-    square: {
-      default: false,
-      type: Boolean,
-    },
-    roundedLeft: {
-      default: false,
-      type: Boolean,
-    },
-    roundedRight: {
-      default: false,
-      type: Boolean,
-    },
+const props = withDefaults(
+  defineProps<{
+    label?: string;
+    color?: number;
+    square?: boolean;
+    roundedLeft?: boolean;
+    roundedRight?: boolean;
     // Pass "disabled" attribute to make it invisible, it'll automatically be
     // applied to <button> as the <button disabled> attribute
-    disabled: {
-      default: false,
-      type: Boolean,
-    },
+    disabled?: boolean;
     // a "blank" prop means the button doesn't do anything and should play
     // the "deny" beep
-    blank: {
-      default: false,
-      type: Boolean,
-    },
+    blank?: boolean;
     // OTHER TODO PROPS
     // Blinking (look for examples for interval and transition)
     // Transitioning between two colors
-  },
-  emits: ["click"],
-  methods: {
-    handleClick: function (event) {
-      this.$emit("click", event);
-      if (this.blank === true && sounds.denyBeep1.playing() === false) {
-        sounds.denyBeep1.play();
-      }
-    },
-  },
-};
+  }>(),
+  {
+    label: makeRandomNumber(5, false),
+    color: Math.floor(Math.random() * 9) + 1,
+    square: false,
+    roundedLeft: false,
+    roundedRight: false,
+    disabled: false,
+    blank: false,
+  }
+);
+
+const emit = defineEmits<{
+  click: [];
+}>();
+
+function handleClick(event) {
+  emit("click", event);
+  if (props.blank === true && sounds.denyBeep1.playing() === false) {
+    sounds.denyBeep1.play();
+  }
+}
 </script>
+
+<template>
+  <button
+    :class="{
+      'button-square': props.square,
+      'button-rounded-left': props.roundedLeft,
+      'button-rounded-right': props.roundedRight,
+      'bgcolor-1': props.color === 1,
+      'bgcolor-2': props.color === 2,
+      'bgcolor-3': props.color === 3,
+      'bgcolor-4': props.color === 4,
+      'bgcolor-5': props.color === 5,
+      'bgcolor-6': props.color === 6,
+      'bgcolor-7': props.color === 7,
+      'bgcolor-8': props.color === 8,
+      'bgcolor-9': props.color === 9,
+    }"
+    v-on:click="handleClick"
+  >
+    {{ props.label }}
+  </button>
+</template>
 
 <style scoped>
 button {

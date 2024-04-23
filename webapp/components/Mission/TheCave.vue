@@ -1,3 +1,41 @@
+<script setup lang="ts">
+const { sounds } = useSounds();
+const router = useRouter();
+
+const i = ref<number>(0);
+const colorRand = ref<number>(
+  Array(10)
+    .fill(0)
+    .map((_) => useLcarsColor())
+);
+const interval = ref<NodeJS.Timeout | null>(null);
+const rockValue = ref<number>(null);
+const loadingNextMessage = ref<number>(false);
+
+// onMounted(() => {
+//   clearInterval(interval.value);
+//   interval.value = setInterval(() => {
+//     increment();
+//   }, 5000);
+// });
+// onBeforeUnmount(() => {
+//   clearInterval(interval.value);
+// });
+
+async function increment() {
+  loadingNextMessage.value = true;
+  await new Promise((r) => setTimeout(r, 3000));
+  loadingNextMessage.value = false;
+
+  i.value = i.value + 1;
+  sounds.playRandom();
+}
+function storeMission() {
+  sounds().playRandom();
+  router.push("/mission-recall");
+}
+</script>
+
 <template>
   <v-row>
     <v-col cols="12" v-if="i >= 0">
@@ -48,57 +86,63 @@
           carbon-based life flurished in past eons.
           <v-list :color="colorRand[5]">
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-1-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Use your sample vials to collect a small sample of the red rocks
                 and a small sample of the white rocks. <br />
                 One or two small rocks of each type will be enough.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-2-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Crush each of your samples to dust using the mortar and pestle.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-3-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Put the crushed rocks into two separate test tubes.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-4-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Using gloves, add a pipette of 1M hydrochloric acid to each test
                 tube and observe what happens.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-5-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 If the rocks fizz they contain carbonate. If there is no fizzing
                 then no carbonate is present.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-6-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Report your results back to mission command and clean up your
                 experiment area before returning to base.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-card-text>
@@ -147,45 +191,6 @@
     </v-col>
   </v-row>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {
-      i: 0,
-      colorRand: Array(10)
-        .fill(0)
-        .map((_) => this.$lcarsColour()),
-      interval: null,
-      rockValue: null,
-      loadingNextMessage: false,
-    };
-  },
-  mounted() {
-    // clearInterval(this.interval);
-    // this.interval = setInterval(() => {
-    //   this.increment();
-    // }, 5000);
-  },
-  beforeUnmount() {
-    // clearInterval(this.interval);
-  },
-  methods: {
-    async increment() {
-      this.loadingNextMessage = true;
-      await new Promise((r) => setTimeout(r, 3000));
-      this.loadingNextMessage = false;
-
-      this.i = this.i + 1;
-      this.$sounds().playRandom();
-    },
-    storeMission() {
-      this.$sounds().playRandom();
-      this.$router.push("/mission-recall");
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 div {

@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const store = useStore();
+
+store.mutations.resetApp();
+</script>
+
 <template>
   <LPage>
     <v-row>
@@ -10,19 +16,6 @@
     </v-row>
   </LPage>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {};
-  },
-  computed: {},
-  async mounted() {
-    await this.$store.dispatch("resetApp");
-    // this.$setBreadcrumbs([{ to: null, label: "Home" }]);
-  },
-};
-</script>
 
 <style scoped>
 .restricted {

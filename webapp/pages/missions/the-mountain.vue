@@ -1,3 +1,23 @@
+<script setup lang="ts">
+const store = useStore();
+const router = useRouter();
+
+const dialog = ref(true);
+const missionStarted = store.getters.missionStarted;
+
+watch(dialog, () => {
+  if (dialog.value === false) {
+    router.push("/mission-list");
+  }
+});
+
+onMounted(() => {
+  if (!missionStarted.value) {
+    router.push("/mission-start");
+  }
+});
+</script>
+
 <template>
   <LPage>
     <LDialog
@@ -8,7 +28,7 @@
     >
       <v-row>
         <v-col cols="8">
-          <v-card tile :color="$lcarsColour()">
+          <v-card tile :color="useLcarsColor()">
             <v-card-title>
               <h2>Mission Details</h2>
             </v-card-title>
@@ -21,34 +41,3 @@
     </LDialog>
   </LPage>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {
-      dialog: true,
-    };
-  },
-  computed: {
-    missionStarted() {
-      return this.$store.getters.missionStarted;
-    },
-  },
-  watch: {
-    dialog() {
-      if (this.dialog) {
-        // opening dialog, ignore
-        return;
-      }
-
-      this.$router.push("/mission-list");
-    },
-  },
-  mounted() {
-    if (!this.missionStarted) {
-      this.$router.push("/mission-start");
-    }
-  },
-  methods: {},
-};
-</script>

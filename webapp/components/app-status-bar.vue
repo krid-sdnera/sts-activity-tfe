@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { AppBreadcrumb } from "~/common/breadcrumb";
+
+const store = useStore();
+
+const breadcrumbs = computed((): AppBreadcrumb[] => {
+  const crumbs = store.getters.breadcrumbs.value;
+
+  return crumbs.length > 0
+    ? crumbs
+    : [
+        new AppBreadcrumb({
+          to: null,
+          label: "Home",
+        }),
+      ];
+});
+</script>
+
 <template>
   <v-container>
     <v-row>
@@ -32,28 +51,6 @@
     </v-row>
   </v-container>
 </template>
-
-<script lang="ts">
-import { AppBreadcrumb } from "~/common/breadcrumb";
-
-export default {
-  name: "breadcrumbs",
-  computed: {
-    breadcrumbs(): AppBreadcrumb[] {
-      const crumbs = this.$store.getters.breadcrumbs;
-
-      return crumbs.length > 0
-        ? crumbs
-        : [
-            new AppBreadcrumb({
-              to: null,
-              label: "Home",
-            }),
-          ];
-    },
-  },
-};
-</script>
 
 <style lang="css" scoped>
 .v-card__text {

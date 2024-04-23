@@ -1,3 +1,20 @@
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    colorScheme: number;
+    align: "left" | "right";
+  }>(),
+  {
+    width: 1,
+    align: "left",
+  }
+);
+
+const emit = defineEmits<{
+  close: [];
+}>();
+</script>
+
 <template>
   <div class="bar" :data-color-scheme="colorScheme" :data-align="align">
     <div class="bar-left"></div>
@@ -6,28 +23,9 @@
         <slot></slot>
       </span>
     </div>
-    <div class="bar-right" @click="$emit('close')">X</div>
+    <div class="bar-right" @click="emit('close')">X</div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    colorScheme: {
-      default: 1,
-      type: Number,
-    },
-    align: {
-      default: "left",
-      type: String,
-      validator: function (value) {
-        return ["left", "right"].includes(value);
-      },
-    },
-  },
-  computed: {},
-};
-</script>
 
 <style scoped>
 /* TODO: Consolidate with small title styles */

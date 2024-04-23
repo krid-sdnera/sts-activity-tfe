@@ -1,12 +1,19 @@
+<script setup lang="ts">
+const store = useStore();
+const router = useRouter();
+
+const missions = store.getters.missions;
+</script>
+
 <template>
   <LPage>
     <v-row
       v-for="(mission, index) in missions"
       :key="mission.name"
-      :align="index % 2 ? 'row-reverse' : ''"
+      :align="index % 2 ? 'end' : 'start'"
     >
       <v-col cols="8">
-        <v-card tile :color="$lcarsColour()">
+        <v-card tile :color="useLcarsColor()">
           <v-card-text>
             <h2>{{ mission.name }}</h2>
           </v-card-text>
@@ -17,7 +24,7 @@
           block
           tile
           :to="`/missions/${mission.name}`"
-          :color="$lcarsColour()"
+          :color="useLcarsColor()"
         >
           Check details
         </v-btn>
@@ -25,45 +32,3 @@
     </v-row>
   </LPage>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {
-      dialog: false,
-    };
-  },
-  computed: {
-    missions() {
-      // const mission = this.$store.getters.mission;
-      const missions = [{ name: "the-cave" }, { name: "the-lake" }];
-
-      if (!missions) {
-        return [];
-      }
-      return missions;
-    },
-  },
-  watch: {
-    dialog() {
-      if (this.dialog) {
-        // opening dialog, ignore
-        return;
-      }
-
-      // if () {
-      //   this.$router.push("/");
-      // }
-    },
-  },
-  mounted() {
-    this.dialog = true;
-  },
-  methods: {
-    closeMission() {
-      this.dialog = false;
-      this.$router.push("/dashboard");
-    },
-  },
-};
-</script>

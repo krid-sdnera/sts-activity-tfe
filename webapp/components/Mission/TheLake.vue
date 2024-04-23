@@ -1,3 +1,41 @@
+<script setup lang="ts">
+const { sounds } = useSounds();
+const router = useRouter();
+
+const i = ref<number>(0);
+const colorRand = ref<number>(
+  Array(10)
+    .fill(0)
+    .map((_) => useLcarsColor())
+);
+const interval = ref<NodeJS.Timeout | null>(null);
+const phValue = ref<number>(null);
+const loadingNextMessage = ref<number>(false);
+
+onMounted(() => {
+  clearInterval(interval.value);
+  interval.value = setInterval(() => {
+    increment();
+  }, 5000);
+});
+onBeforeUnmount(() => {
+  clearInterval(interval.value);
+});
+
+async function increment() {
+  loadingNextMessage.value = true;
+  await new Promise((r) => setTimeout(r, 3000));
+  loadingNextMessage.value = false;
+
+  i.value = i.value + 1;
+  sounds.playRandom();
+}
+function storeMission() {
+  sounds().playRandom();
+  router.push("/mission-recall");
+}
+</script>
+
 <template>
   <v-row>
     <v-col cols="12" v-if="i >= 0">
@@ -47,41 +85,45 @@
 
           <v-list :color="colorRand[5]">
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-1-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Collect water samples of two different types of water from
                 around the beach area. Test the two water samples. You only need
                 enough to fill a quarter of your vial.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
 
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-2-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Add 6-8 drops of universal indicator to your test tube.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-3-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Compare the colour of the liquid in your test tube with the
                 colour chart and determine the pH of the water sample.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-icon>
+              <template v-slot:prepend>
                 <v-icon color="black">mdi-numeric-4-box</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
+              </template>
+
+              <v-list-item-title>
                 Report your results back to mission command and clean up your
                 experiment area before returning to base.
-              </v-list-item-content>
+              </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-card-text>
@@ -121,45 +163,6 @@
     </v-col>
   </v-row>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {
-      i: 0,
-      colorRand: Array(10)
-        .fill(0)
-        .map((_) => this.$lcarsColour()),
-      interval: null,
-      phValue: null,
-      loadingNextMessage: false,
-    };
-  },
-  mounted() {
-    // clearInterval(this.interval);
-    // this.interval = setInterval(() => {
-    //   this.increment();
-    // }, 5000);
-  },
-  beforeUnmount() {
-    // clearInterval(this.interval);
-  },
-  methods: {
-    async increment() {
-      this.loadingNextMessage = true;
-      await new Promise((r) => setTimeout(r, 3000));
-      this.loadingNextMessage = false;
-
-      this.i = this.i + 1;
-      this.$sounds().playRandom();
-    },
-    storeMission() {
-      this.$sounds().playRandom();
-      this.$router.push("/mission-recall");
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 div {

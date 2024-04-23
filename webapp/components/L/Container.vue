@@ -1,15 +1,24 @@
+<script setup lang="ts">
+const props = defineProps<{
+  title: string;
+  sidebarTopMenu: any[];
+  sidebarBottomMenu: any[];
+  metaMenu: any[];
+}>();
+</script>
+
 <template>
   <div class="lcars-container">
     <section class="lcars-type-01">
-      <LHeader :title="title"></LHeader>
-      <LSidebar location="top" :items="sidebarTopMenu"></LSidebar>
-      <LSidebar location="bottom" :items="sidebarBottomMenu"></LSidebar>
+      <LHeader :title="props.title"></LHeader>
+      <LSidebar location="top" :items="props.sidebarTopMenu"></LSidebar>
+      <LSidebar location="bottom" :items="props.sidebarBottomMenu"></LSidebar>
 
       <div class="divider-top"></div>
       <div class="divider-bottom"></div>
       <LcarsDividerContent />
 
-      <LMetaTable :items="metaMenu"></LMetaTable>
+      <LMetaTable :items="props.metaMenu"></LMetaTable>
 
       <LMain>
         <slot></slot>
@@ -18,24 +27,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { initSounds } from "~/common/utils/sounds";
-
-export default {
-  props: {
-    title: String,
-    sidebarTopMenu: Array,
-    sidebarBottomMenu: Array,
-    metaMenu: Array,
-  },
-  mounted() {
-    initSounds();
-  },
-};
-</script>
-
 <style lang="scss">
-@import "~vuetify/src/styles/styles.sass";
+// @import "~vuetify/src/styles/styles.sass";
 
 .lcars-container {
   height: 100vh;

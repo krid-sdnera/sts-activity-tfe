@@ -1,7 +1,7 @@
 // The BigInt polyfill requires calling with `new`, but native BigInt
 // does not use `new`. So this is imported with a different name and then
 // used if native BigInt is not present
-import BigIntPolyfill from 'bigint-polyfill'
+import BigIntPolyfill from "bigint-polyfill";
 
 /**
  * Makes a random number string for labels etc. Although it uses
@@ -19,69 +19,73 @@ import BigIntPolyfill from 'bigint-polyfill'
  *    strings.) Note that `spread` overrides `padded`.
  * @returns {String}
  */
-export function makeRandomNumber (digits, padded, spread) {
+export function makeRandomNumber(digits, padded, spread) {
   if (!digits) {
-    digits = 6
+    digits = 6;
   }
-  if (typeof padded === 'undefined') {
-    padded = true
+  if (typeof padded === "undefined") {
+    padded = true;
   }
 
-  let number, length
+  let number, length;
   if (spread) {
-    const min = Number.isInteger(spread) ? spread : 1
-    length = getRandomInt(min, digits)
+    const min = Number.isInteger(spread) ? spread : 1;
+    length = getRandomInt(min, digits);
   } else {
-    length = digits
+    length = digits;
   }
 
   // Numbers that are too big need to use BigInt to render
   if (length >= Number.MAX_SAFE_INTEGER.toString().length) {
-    if (typeof BigInt !== 'undefined') {
-      number = BigInt(Math.floor(Math.random() * Math.pow(10, length))).toString()
+    if (typeof BigInt !== "undefined") {
+      number = BigInt(
+        Math.floor(Math.random() * Math.pow(10, length))
+      ).toString();
     } else {
       // Use BigInt polyfill if native implementation doesn't exist
       // This requires the `new` syntax, which native BigInt doesn't use
-      number = new BigIntPolyfill(Math.floor(Math.random() * Math.pow(10, length))).toString()
+      number = new BigIntPolyfill(
+        Math.floor(Math.random() * Math.pow(10, length))
+      ).toString();
     }
   } else {
-    number = Math.floor(Math.random() * Math.pow(10, length)).toString()
+    number = Math.floor(Math.random() * Math.pow(10, length)).toString();
   }
 
   if (padded === true && !spread) {
-    number = number.padStart(digits, '0')
+    number = number.padStart(digits, "0");
   }
 
-  return number
+  return number;
 }
 
-export function makeRandomLetters (letters) {
+export function makeRandomLetters(letters) {
   if (!letters) {
-    letters = 3
+    letters = 3;
   }
-  
+
   // Don't pick I or O? (unless we find visual proof these are used)
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ";
 
-  let set = ''
+  let set = "";
   for (let i = 0; i < letters; i++) {
-    const pick = Math.floor(Math.random() * chars.length)
-    set = set + chars.charAt(pick)
+    const pick = Math.floor(Math.random() * chars.length);
+    set = set + chars.charAt(pick);
   }
 
-  return set
+  return set;
 }
 
-export function pickRandom (array) {
-  return array[Math.floor(Math.random() * array.length)]
+export function pickRandom(array) {
+  return array[Math.floor(Math.random() * array.length)];
 }
 
-export function pickRandomWithoutReplacement (array) {
-  const choice = pickRandom(array)
-  const index = array.indexOf(choice)
+export function pickRandomWithoutReplacement(array) {
+  const choice = pickRandom(array);
+  const index = array.indexOf(choice);
   // Modifies original!
-  array.splice(index, 1)
-  return choice
+  array.splice(index, 1);
+  return choice;
 }
 
 /**
@@ -92,17 +96,17 @@ export function pickRandomWithoutReplacement (array) {
  * Using Math.round() will give you a non-uniform distribution!
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
  */
-export function getRandomInt (min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
+export function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
  * Similar to above but does not deal with integers
  */
-export function getRandomRange (min, max) {
-  return Math.random() * (max - min + 1) + min
+export function getRandomRange(min, max) {
+  return Math.random() * (max - min + 1) + min;
 }
 
 /**
@@ -113,13 +117,13 @@ export function getRandomRange (min, max) {
  * @param {Number} timeFrame
  * @returns throttledFunc
  */
-export function throttle (func, timeFrame) {
-  let lastTime = 0
+export function throttle(func, timeFrame) {
+  let lastTime = 0;
   return function () {
-    const now = new Date()
+    const now = new Date();
     if (now - lastTime >= timeFrame) {
-      func()
-      lastTime = now
+      func();
+      lastTime = now;
     }
-  }
+  };
 }

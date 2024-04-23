@@ -1,35 +1,4 @@
-<template>
-  <div>
-    <LContainer
-      :title="lcarsLabel"
-      :sidebarTopMenu="sidebarTopMenu"
-      :sidebarBottomMenu="sidebarBottomMenu"
-      :metaMenu="metaMenu"
-    >
-      <v-app>
-        <v-main>
-          <v-container fill-height fluid>
-            <v-row>
-              <v-col cols="8">
-                <Nuxt />
-              </v-col>
-              <v-col cols="4">
-                <jitsi></jitsi>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-main>
-        <alerts></alerts>
-      </v-app>
-    </LContainer>
-  </div>
-</template>
-
-<script lang="ts">
-import { makeRandomNumber, makeRandomLetters } from "~/common/utils";
-import { initSounds } from "~/common/utils/sounds";
-import jitsi from "~/components/jitsi.vue";
-
+<script setup lang="ts">
 /**
  * Makes labels for LCARS UI.
  * Types:
@@ -43,18 +12,18 @@ import jitsi from "~/components/jitsi.vue";
  * @returns {String}
  */
 
-function makeLabels(type) {
+function makeLabels(type?: number) {
   switch (type) {
     case 1:
-      return makeRandomNumber(6);
+      return useRandom().numbers(6);
     case 2:
-      return `${makeRandomNumber(2)}-${makeRandomNumber(7)}-${makeRandomNumber(
-        2
-      )}`;
+      return `${useRandom().numbers(2)}-${useRandom().numbers(
+        7
+      )}-${useRandom().numbers(2)}`;
     case 3:
-      return `${makeRandomLetters(3)} ${makeRandomNumber(4, false, 3)}`;
+      return `${useRandom().letters(3)} ${useRandom().numbers(4, false, 3)}`;
     case 4:
-      return `${makeRandomNumber(2)}-${makeRandomNumber(6)}`;
+      return `${useRandom().numbers(2)}-${useRandom().numbers(6)}`;
     default: {
       const rand = Math.ceil(Math.random() * 4);
       return makeLabels(rand);
@@ -63,86 +32,105 @@ function makeLabels(type) {
 }
 
 function makeLCARSLabel() {
-  return `LCARS ${makeRandomNumber(5)}`;
+  return `LCARS ${useRandom().numbers(5)}`;
 }
 
-export default {
-  components: { jitsi },
-  data() {
-    return {};
-  },
-  mounted() {
-    initSounds();
-  },
-  computed: {
-    accessCode() {
-      return this.$store.getters.accessCode;
-    },
-    lcarsLabel() {
-      if (!this.accessCode) {
-        return makeLCARSLabel();
-      } else {
-        return `${makeLCARSLabel()} Terra Firma Explora`;
-      }
-    },
-    sidebarTopMenu() {
-      const items = [];
-      if (!this.accessCode) {
-        items.push({ title: makeLCARSLabel(), to: "/" });
-        items.push({ title: makeLabels(), to: "#" });
-      } else {
-        items.push({ title: makeLCARSLabel(), to: "#" });
-        items.push({ title: `Restrict Access ${makeLabels(1)}`, to: "/" });
-      }
+const { sounds } = useSounds();
+const store = useStore();
+const accessCode = store.getters.accessCode;
 
-      return items;
-    },
-    sidebarBottomMenu() {
-      const items = [];
-      if (!this.accessCode) {
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-      } else {
-        items.push({
-          title: `Mission Details ${makeLabels()}`,
-          to: "/dashboard",
-        });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({
-          title: `Away Team Vitals ${makeLabels()}`,
-          to: "/life-support",
-        });
-        items.push({ title: makeLabels(), to: "#" });
-      }
+const lcarsLabel = computed(() => {
+  if (!accessCode.value) {
+    return makeLCARSLabel();
+  } else {
+    return `${makeLCARSLabel()} Terra Firma Explora`;
+  }
+});
+const sidebarTopMenu = computed(() => {
+  const items = [];
+  if (!accessCode.value) {
+    items.push({ title: makeLCARSLabel(), to: "/" });
+    items.push({ title: makeLabels(), to: "#" });
+  } else {
+    items.push({ title: makeLCARSLabel(), to: "#" });
+    items.push({ title: `Restrict Access ${makeLabels(1)}`, to: "/" });
+  }
 
-      return items;
-    },
-    metaMenu() {
-      const items = [];
-      if (!this.accessCode) {
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-      } else {
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-        items.push({ title: makeLabels(), to: "#" });
-      }
+  return items;
+});
 
-      return items;
-    },
-  },
-};
+const sidebarBottomMenu = computed(() => {
+  const items = [];
+  if (!accessCode.value) {
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+  } else {
+    items.push({
+      title: `Mission Details ${makeLabels()}`,
+      to: "/dashboard",
+    });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({
+      title: `Away Team Vitals ${makeLabels()}`,
+      to: "/life-support",
+    });
+    items.push({ title: makeLabels(), to: "#" });
+  }
+
+  return items;
+});
+
+const metaMenu = computed(() => {
+  const items = [];
+  if (!accessCode.value) {
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+  } else {
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+    items.push({ title: makeLabels(), to: "#" });
+  }
+
+  return items;
+});
 </script>
 
+<template>
+  <div>
+    <LContainer
+      :title="lcarsLabel"
+      :sidebarTopMenu="sidebarTopMenu"
+      :sidebarBottomMenu="sidebarBottomMenu"
+      :metaMenu="metaMenu"
+    >
+      <v-app>
+        <v-main>
+          <v-container fluid class="fill-height">
+            <v-row class="fill-height">
+              <v-col cols="8">
+                <slot />
+              </v-col>
+              <v-col cols="4">
+                <jitsi></jitsi>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+        <alerts></alerts>
+      </v-app>
+    </LContainer>
+  </div>
+</template>
+
 <style lang="scss">
-@import "~vuetify/src/styles/styles.sass";
+// @import "~vuetify/src/styles/styles.sass";
 #app {
   background-color: var(--lcars-colors-black);
   height: 100%;

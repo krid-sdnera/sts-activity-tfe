@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const store = useStore();
+
+const alerts = store.getters.alerts;
+</script>
+
 <template>
   <div class="alert-container">
     <v-alert
@@ -13,18 +19,6 @@
     </v-alert>
   </div>
 </template>
-
-<script lang="ts">
-import { AppAlert } from "~/common/alert";
-
-export default {
-  computed: {
-    alerts(): AppAlert[] {
-      return this.$store.getters.alerts;
-    },
-  },
-};
-</script>
 
 <style lang="css" scoped>
 .alert-container {

@@ -1,16 +1,16 @@
-// import { Store } from "vuex/types/index";
+type AppAlertType = "error" | "warning" | "success" | "info";
 
 export interface AppAlertOptions {
   heading?: string;
   message: string;
-  type?: "error" | "warning" | "success" | "info";
+  type?: AppAlertType;
   deduplicate?: boolean;
 }
 
 export class AppAlert {
   heading: string | null;
   message: string;
-  type: string;
+  type: AppAlertType;
   deduplicate: boolean;
   uniq: string;
 
@@ -39,8 +39,4 @@ export class AppAlert {
     }
     this.timeout = setTimeout(callback, millis, this);
   }
-}
-
-export function createAlert(store: any, options: AppAlertOptions) {
-  store.dispatch(`addAlert`, new AppAlert(options));
 }

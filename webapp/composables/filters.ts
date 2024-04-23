@@ -28,24 +28,31 @@ export const dateHelper = (
   return dt;
 };
 
-Vue.filter(
-  "date",
-  function (inDate: Date | string | undefined, format: "ymd" | "dmy") {
-    const dt: DateTime | string = dateHelper(inDate);
-    if (typeof dt === "string") {
-      return dt;
-    }
+export function useFilters() {
+  return {
+    dateFilter,
+    datetimeFilter,
+    durationFilter,
+    capitalizeFilter,
+    phoneFilter,
+  };
+}
 
-    switch (format) {
-      case "ymd":
-        return dt.toISODate();
-      default:
-        return dt.toLocaleString(DateTime.DATE_SHORT);
-    }
+function dateFilter(inDate: Date | string | undefined, format: "ymd" | "dmy") {
+  const dt: DateTime | string = dateHelper(inDate);
+  if (typeof dt === "string") {
+    return dt;
   }
-);
 
-Vue.filter("datetime", function (inDate: Date | string | undefined) {
+  switch (format) {
+    case "ymd":
+      return dt.toISODate();
+    default:
+      return dt.toLocaleString(DateTime.DATE_SHORT);
+  }
+}
+
+function datetimeFilter(inDate: Date | string | undefined) {
   const dt: DateTime | string = dateHelper(inDate);
   if (typeof dt === "string") {
     return dt;
@@ -56,9 +63,9 @@ Vue.filter("datetime", function (inDate: Date | string | undefined) {
     hour: "numeric",
     minute: "numeric",
   });
-});
+}
 
-export function durationFilter(
+function durationFilter(
   inDate: string | Date | DateTime,
   options: boolean | { nice: boolean; long: boolean } = true
 ) {
@@ -138,17 +145,16 @@ export function durationFilter(
   }
   return pp.join(" ");
 }
-Vue.filter("duration", durationFilter);
 
-Vue.filter("capitalize", function (value: string | undefined) {
+function capitalizeFilter(value: string | undefined) {
   if (!value) {
     return "";
   }
   value = value.toString();
   return value.charAt(0).toUpperCase() + value.slice(1);
-});
+}
 
-Vue.filter("phone", function (inPhone: string | undefined) {
+function phoneFilter(inPhone: string | undefined) {
   if (!inPhone) {
     return "";
   }
@@ -164,4 +170,4 @@ Vue.filter("phone", function (inPhone: string | undefined) {
   if (inPhone.length === 11) {
     return inPhone.replace(/61(\d{3})(\d{3})(\d{3})/, "+61$1 $2 $3");
   }
-});
+}

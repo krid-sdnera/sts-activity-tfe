@@ -1,13 +1,25 @@
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    items: any[];
+    colorScheme?: number;
+  }>(),
+  {
+    colorScheme: Math.random() > 0.75 ? 2 : 1,
+  }
+);
+</script>
+
 <template>
   <div class="meta-content">
     <div class="numbers-area">
       <client-only>
-        <LcarsNumbersTable :color-scheme="colorScheme" />
+        <LcarsNumbersTable :color-scheme="props.colorScheme" />
       </client-only>
     </div>
     <div class="buttons-area">
-      <LcarsLCARSButton
-        v-for="(item, i) in items"
+      <LCARSButton
+        v-for="(item, i) in props.items"
         :key="i"
         :color="item.colour"
         :label="item.title"
@@ -17,17 +29,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  props: {
-    items: Array,
-    colorScheme: { type: Number, default: Math.random() > 0.75 ? 2 : 1 },
-  },
-};
-</script>
-
 <style lang="scss">
-@import "~vuetify/src/styles/styles.sass";
+// @import "~vuetify/src/styles/styles.sass";
 .meta-content {
   user-select: none;
   grid-area: meta-content;

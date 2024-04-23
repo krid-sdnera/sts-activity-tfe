@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { makeRandomNumber, getRandomInt } from "~/common/utils";
+import Number1 from "./label/1.svg";
+import Number2 from "./label/2.svg";
+import Number3 from "./label/3.svg";
+import Number4 from "./label/4.svg";
+import Number5 from "./label/5.svg";
+import Number6 from "./label/6.svg";
+import Number7 from "./label/7.svg";
+import Number8 from "./label/8.svg";
+import Number9 from "./label/9.svg";
+import Number0 from "./label/0.svg";
+
+const props = withDefaults(
+  defineProps<{
+    // Label can be passed in as a prop, or one is randomly selected
+    label: string;
+    // Color can be passed in as a prop, or one is randomly selected
+    color: number;
+  }>(),
+  {
+    label: makeRandomNumber(getRandomInt(2, 5), false),
+    fill: Math.floor(Math.random() * 9) + 1,
+  }
+);
+</script>
+
 <template>
   <span class="label">
     <div class="label-start"></div>
@@ -16,53 +43,6 @@
     <div class="label-end"></div>
   </span>
 </template>
-
-<script>
-import { makeRandomNumber, getRandomInt } from "~/common/utils";
-import Number1 from "./label/1.svg";
-import Number2 from "./label/2.svg";
-import Number3 from "./label/3.svg";
-import Number4 from "./label/4.svg";
-import Number5 from "./label/5.svg";
-import Number6 from "./label/6.svg";
-import Number7 from "./label/7.svg";
-import Number8 from "./label/8.svg";
-import Number9 from "./label/9.svg";
-import Number0 from "./label/0.svg";
-
-export default {
-  name: "lcars-label",
-  props: {
-    // Label can be passed in as a prop, or one is randomly selected
-    label: {
-      default: () => {
-        const digits = getRandomInt(2, 5);
-        return makeRandomNumber(digits, false);
-      },
-      type: String,
-    },
-    // Color can be passed in as a prop, or one is randomly selected
-    color: {
-      default: () => {
-        return Math.floor(Math.random() * 9) + 1;
-      },
-      type: Number,
-    },
-  },
-  components: {
-    Number1,
-    Number2,
-    Number3,
-    Number4,
-    Number5,
-    Number6,
-    Number7,
-    Number8,
-    Number9,
-    Number0,
-  },
-};
-</script>
 
 <style scoped>
 .label {

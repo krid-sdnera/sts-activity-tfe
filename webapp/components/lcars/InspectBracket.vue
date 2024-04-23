@@ -1,3 +1,17 @@
+<script>
+
+const props = withDefaults(
+  defineProps<{
+    size: string;
+  }>(),
+  {
+    type: "100%",
+  }
+);
+
+const planets = ref<number>(Math.round(Math.random() * 8))
+</script>
+
 <template>
   <div class="inspect-bracket-container">
     <div class="inspect-bracket">
@@ -88,29 +102,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import InspectBracketTL from "./InspectBracketTL.vue";
-
-export default {
-  props: {
-    size: {
-      default: "100%",
-      type: String,
-    },
-  },
-  data() {
-    // Set to number of planet images I have
-    const planet = Math.round(Math.random() * 8);
-    return {
-      planet,
-    };
-  },
-  components: {
-    InspectBracketTL,
-  },
-};
-</script>
 
 <style scoped>
 .inspect-bracket-container {

@@ -1,5 +1,16 @@
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    type?: number;
+  }>(),
+  {
+    type: Math.floor(Math.random() * 3) + 1,
+  }
+);
+</script>
+
 <template>
-  <div class="divider-grid" :data-type="type">
+  <div class="divider-grid" :data-type="props.type">
     <div class="dg1a"></div>
     <div class="dg1b">
       <div class="dg1b-x"></div>
@@ -14,20 +25,6 @@
     <div class="dg2d"></div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    // Type can be passed in as a prop, or one is randomly selected
-    type: {
-      default: () => {
-        return Math.floor(Math.random() * 3) + 1;
-      },
-      type: Number,
-    },
-  },
-};
-</script>
 
 <style scoped>
 .divider-grid {

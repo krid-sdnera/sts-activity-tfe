@@ -1,66 +1,57 @@
+<script setup lang="ts">
+const props = defineProps<{
+  name: string;
+  title: string;
+}>();
+
+const model = defineModel<boolean>();
+
+const store = useStore();
+
+const dialog = ref(false);
+const colorScheme = ref(Math.random() > 0.75 ? 2 : 1);
+
+onMounted(() => {
+  dialog.value = model.value ?? false;
+});
+
+onBeforeUnmount(() => {
+  store.mutations.setDialogStatus({ [props.name]: false });
+});
+
+watch(model, () => {
+  dialog.value = model.value ?? false;
+});
+
+watch(model, () => {
+  store.mutations.setDialogStatus({ [props.name]: dialog.value });
+});
+
+function close() {
+  dialog.value = false;
+}
+</script>
+
 <template>
-  <v-dialog v-model="dialog" overlay-color="black" :overlay-opacity="1">
+  <v-dialog v-model="dialog" scrim="black" :opacity="1">
     <div class="dialog-container">
       <div>
-        <LcarsLCARSBar
-          align="left"
-          :color-scheme="colorScheme"
-          @close="close()"
-        >
-          {{ title }}
-        </LcarsLCARSBar>
+        <LCARSBar align="left" :color-scheme="colorScheme" @close="close()">
+          {{ props.title }}
+        </LCARSBar>
 
         <div class="content-wrapper">
           <slot :close="close"></slot>
         </div>
 
-        <LcarsLCARSBar align="right" :color-scheme="colorScheme">
-          footer
-        </LcarsLCARSBar>
+        <LCARSBar align="right" :color-scheme="colorScheme"> Close </LCARSBar>
       </div>
     </div>
   </v-dialog>
 </template>
 
-<script lang="ts">
-export default {
-  props: {
-    name: String,
-    title: String,
-    value: Boolean,
-  },
-  data() {
-    return {
-      dialog: false,
-      colorScheme: Math.random() > 0.75 ? 2 : 1,
-    };
-  },
-  mounted() {
-    this.dialog = this.value;
-  },
-  beforeUnmount() {
-    this.$store.dispatch("setDialogStatus", { [this.name]: false });
-  },
-  watch: {
-    value() {
-      this.dialog = this.value;
-    },
-    dialog() {
-      this.$store.dispatch("setDialogStatus", { [this.name]: this.dialog });
-
-      this.$emit("input", this.dialog);
-    },
-  },
-  methods: {
-    close() {
-      this.dialog = false;
-    },
-  },
-};
-</script>
-
 <style lang="scss" scoped>
-@import "~vuetify/src/styles/styles.sass";
+// @import "~vuetify/src/styles/styles.sass";
 
 .dialog-container {
   overflow-y: hidden;

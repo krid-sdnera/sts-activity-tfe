@@ -15,6 +15,8 @@ interface SoundsType {
 export const sounds: SoundsType = {} as SoundsType;
 
 export function initSounds() {
+  console.log("initSounds");
+
   sounds.denyBeep1 = new Howl({
     src: ["/sounds/deny_beep_01.ogg"],
     volume: 0.2,

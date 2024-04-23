@@ -1,3 +1,10 @@
+
+@use 'vuetify' with (
+  $body-font-family: (Antonio, Arial, Helvetica, sans-serif),
+  $heading-font-family: (Antonio, Arial, Helvetica, sans-serif),
+);
+
+
 @font-face {
   font-family: "Antonio";
   font-style: normal;
@@ -6,8 +13,6 @@
     url("https://fonts.cdnfonts.com/s/12203/Antonio-Regular.woff") format("woff");
 }
 
-$body-font-family: "Antonio", Arial, Helvetica, sans-serif;
-$heading-font-family: "Antonio", Arial, Helvetica, sans-serif;
 
 a {
   text-decoration: none;
@@ -15,13 +20,9 @@ a {
 
 $grid-gutter: 5px;
 
-@import "~vuetify/src/styles/styles.sass";
-
 .v-card__title {
-  word-break: normal;
+  word-break: normal; 
 }
-
-
 
 :root {
   /* Doug Drexler reference colors */

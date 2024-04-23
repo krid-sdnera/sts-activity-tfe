@@ -5,6 +5,12 @@ const baseUrl =
     ? "http://web.sts.dirk.arends.com.au"
     : "http://localhost:3000";
 
+const jitsiDomain = true
+  ? "192.168.20.117:8443"
+  : process.env.ENV === "production"
+  ? "jitsi.sts.dirk.arends.com.au"
+  : "meet.jit.si";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
@@ -20,33 +26,30 @@ export default defineNuxtConfig({
       },
     },
   },
-
-  /*
-   ** Headers of the page
-   ** Doc: https://vue-meta.nuxtjs.org/api/#metainfo-properties
-   */
-  head: {
-    title: "Terra Firma Explora",
-    meta: [],
-    link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-      {
-        rel: "stylesheet",
-        type: "text/css",
-        // href: "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css",
-        href: "/materialdesignicons.min.css",
-      },
-    ],
-    script: [
-      {
-        src: "https://sts.dirk.arends.com.au/external_api.js",
-        // process.env.ENV === "production"
-        // ? "https://sts.dirk.arends.com.au/external_api.js"
-        // : "https://meet.jit.si/external_api.js",
-      },
-    ],
+  app: {
+    /*
+     ** Headers of the page
+     ** Doc: https://vue-meta.nuxtjs.org/api/#metainfo-properties
+     */
+    head: {
+      title: "Terra Firma Explora",
+      meta: [],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        {
+          rel: "stylesheet",
+          type: "text/css",
+          // href: "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css",
+          href: "/materialdesignicons.min.css",
+        },
+      ],
+      script: [
+        {
+          src: `https://${jitsiDomain}/external_api.js`,
+        },
+      ],
+    },
   },
-
   build: {
     transpile: ["vuetify"],
   },
@@ -60,18 +63,6 @@ export default defineNuxtConfig({
     },
     //...
   ],
-
-  vuetify: {
-    customVariables: ["~/scss/variables.scss"],
-    treeShake: true,
-    defaultAssets: {
-      font: false,
-      icons: false,
-    },
-    theme: {
-      dark: true,
-    },
-  },
 });
 
 export interface RuntimeConfig {

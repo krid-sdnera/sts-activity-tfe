@@ -1,14 +1,12 @@
-version: "2"
+include:
+  - ./jitsi-meet/docker-compose.yml
+
 services:
-  node:
-    image: "node:16"
-    user: "node"
-    working_dir: /home/node/app
+  app:
+    build: ./webapp
+    restart: unless-stopped
+    ports:
+      - 3000:3000
     environment:
       - NODE_ENV=production
       - HOST=0.0.0.0
-    volumes:
-      - ./:/home/node/app
-    ports:
-      - "192.168.1.3:80:3000"
-    command: "node ./.output/server/index.mjs"

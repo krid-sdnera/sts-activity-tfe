@@ -1,40 +1,42 @@
+<script setup lang="ts">
+const { sounds } = useSounds();
+
+const props = withDefaults(
+  defineProps<{
+    title: string;
+    titleType?: number;
+  }>(),
+  { titleType: Math.ceil(Math.random() * 2) }
+);
+
+function enterFullscreen() {
+  if (document.fullscreenEnabled) {
+    if (!document.fullscreenElement) {
+      document.documentElement
+        .requestFullscreen()
+        .then(() => {
+          sounds.panelBeep13.play();
+        })
+        .catch((err) => {
+          sounds.deny();
+        });
+    } else {
+      document.exitFullscreen();
+      sounds.panelBeep08.play();
+    }
+  }
+}
+</script>
+
 <template>
-  <div class="lcars-title" :data-type="titleType">
-    {{ title }}
+  <div class="lcars-title" :data-type="props.titleType">
+    {{ props.title }}
     <span @click="enterFullscreen()">[]</span>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  props: {
-    title: String,
-    titleType: { type: Number, default: Math.ceil(Math.random() * 2) },
-  },
-  methods: {
-    enterFullscreen() {
-      if (document.fullscreenEnabled) {
-        if (!document.fullscreenElement) {
-          document.documentElement
-            .requestFullscreen()
-            .then(() => {
-              this.$sounds().panelBeep13.play();
-            })
-            .catch((err) => {
-              this.$sounds().deny();
-            });
-        } else {
-          document.exitFullscreen();
-          this.$sounds().panelBeep08.play();
-        }
-      }
-    },
-  },
-};
-</script>
-
 <style lang="scss" scoped>
-@import "~vuetify/src/styles/styles.sass";
+// @import "~vuetify/src/styles/styles.sass";
 
 .lcars-title {
   display: block;
